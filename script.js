@@ -28,7 +28,7 @@ import {
    ========================================================= */
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAGrCghSoJf7ULhi1ZiR1qeYmt4bE63a3M",
+  apiKey: "AIzaSyAGrCghSoJf7ULhi1Zi1RqeYmt4bE63a3M",
   authDomain: "prjt-78fef.firebaseapp.com",
   databaseURL: "https://prjt-78fef-default-rtdb.firebaseio.com",
   projectId: "prjt-78fef",
