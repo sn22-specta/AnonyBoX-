@@ -41,7 +41,7 @@
   ====================================================== -->
 
   <section
-    id="homeScreen"
+    id="home-screen"
     class="screen home-screen"
   >
 
@@ -49,7 +49,7 @@
 
       <div class="brand">
 
-        <div class="logo">
+        <div class="logo" aria-hidden="true">
           👻
         </div>
 
@@ -86,9 +86,9 @@
       aria-label="Présentation d'AnonyBoX"
     >
 
-      <div class="hero-glow"></div>
+      <div class="hero-glow" aria-hidden="true"></div>
 
-      <div class="hero-icon">
+      <div class="hero-icon" aria-hidden="true">
         👻
       </div>
 
@@ -123,7 +123,7 @@
         data-create-group
       >
 
-        <span class="action-icon">
+        <span class="action-icon" aria-hidden="true">
           ➕
         </span>
 
@@ -139,7 +139,7 @@
 
         </span>
 
-        <span class="arrow">
+        <span class="arrow" aria-hidden="true">
           ›
         </span>
 
@@ -153,7 +153,7 @@
         data-join-group
       >
 
-        <span class="action-icon">
+        <span class="action-icon" aria-hidden="true">
           🔗
         </span>
 
@@ -169,7 +169,7 @@
 
         </span>
 
-        <span class="arrow">
+        <span class="arrow" aria-hidden="true">
           ›
         </span>
 
@@ -180,7 +180,10 @@
 
     <!-- GROUPES RÉCENTS -->
 
-    <section class="home-groups-preview">
+    <section
+      class="home-groups-preview"
+      aria-labelledby="home-groups-title"
+    >
 
       <div class="section-title">
 
@@ -190,7 +193,7 @@
             TES DISCUSSIONS
           </p>
 
-          <h2>
+          <h2 id="home-groups-title">
             Groupes récents
           </h2>
 
@@ -217,7 +220,7 @@
           class="empty-groups"
         >
 
-          <div class="empty-icon">
+          <div class="empty-icon" aria-hidden="true">
             👻
           </div>
 
@@ -276,7 +279,7 @@
 
     <div class="search-box">
 
-      <span>
+      <span aria-hidden="true">
         🔎
       </span>
 
@@ -285,6 +288,7 @@
         type="search"
         placeholder="Rechercher un groupe..."
         autocomplete="off"
+        aria-label="Rechercher un groupe"
       >
 
     </div>
@@ -300,7 +304,7 @@
         class="empty-groups"
       >
 
-        <div class="empty-icon">
+        <div class="empty-icon" aria-hidden="true">
           👥
         </div>
 
@@ -328,8 +332,8 @@
   ====================================================== -->
 
   <section
-    id="chatScreen"
-    class="chat-page"
+    id="chat-screen"
+    class="screen chat-page"
     aria-hidden="true"
   >
 
@@ -350,29 +354,35 @@
         id="chat-group-button"
         class="chat-group-button"
         type="button"
+        aria-label="Informations du groupe"
       >
 
-        <div
+        <span
           id="chat-avatar"
           class="chat-avatar"
+          aria-hidden="true"
         >
           👻
-        </div>
+        </span>
 
-        <div class="chat-group-info">
+        <span class="chat-group-info">
 
-          <h2
+          <span
             id="chat-title"
+            class="chat-title"
             data-group-name
           >
             Discussion
-          </h2>
+          </span>
 
-          <p id="chat-status">
+          <span
+            id="chat-status"
+            class="chat-status"
+          >
             Groupe privé
-          </p>
+          </span>
 
-        </div>
+        </span>
 
       </button>
 
@@ -382,6 +392,8 @@
         class="chat-menu-button"
         type="button"
         aria-label="Ouvrir le menu"
+        aria-haspopup="menu"
+        aria-controls="chat-menu"
         aria-expanded="false"
       >
         ⋮
@@ -404,7 +416,7 @@
         type="button"
         role="menuitem"
       >
-        <span>ℹ️</span>
+        <span aria-hidden="true">ℹ️</span>
         <span>Informations du groupe</span>
       </button>
 
@@ -415,7 +427,7 @@
         role="menuitem"
         data-copy-code
       >
-        <span>📋</span>
+        <span aria-hidden="true">📋</span>
         <span>Copier le code</span>
       </button>
 
@@ -426,7 +438,7 @@
         role="menuitem"
         data-leave-group
       >
-        <span>🚪</span>
+        <span aria-hidden="true">🚪</span>
         <span>Quitter le groupe</span>
       </button>
 
@@ -438,7 +450,7 @@
         style="display:none;"
         data-delete-group
       >
-        <span>🗑️</span>
+        <span aria-hidden="true">🗑️</span>
         <span>Supprimer le groupe</span>
       </button>
 
@@ -475,6 +487,7 @@
         <div
           id="info-group-avatar"
           class="large-group-avatar"
+          aria-hidden="true"
         >
           👻
         </div>
@@ -529,9 +542,12 @@
 
     <!-- MESSAGES -->
 
-    <main
+    <div
       id="messages"
       class="messages"
+      role="log"
+      aria-live="polite"
+      aria-label="Messages de la discussion"
     >
 
       <div
@@ -539,7 +555,7 @@
         class="chat-welcome"
       >
 
-        <div>
+        <div aria-hidden="true">
           👻
         </div>
 
@@ -553,7 +569,7 @@
 
       </div>
 
-    </main>
+    </div>
 
 
     <!-- ÉCRITURE -->
@@ -564,14 +580,15 @@
 
         <input
           type="text"
-          id="messageInput"
+          id="message-input"
           placeholder="Écrire un message..."
           autocomplete="off"
           maxlength="1000"
+          aria-label="Écrire un message"
         >
 
         <button
-          id="sendMessageBtn"
+          id="send-message-button"
           type="button"
           aria-label="Envoyer le message"
         >
@@ -613,7 +630,7 @@
 
     <div class="profile-card">
 
-      <div class="profile-icon">
+      <div class="profile-icon" aria-hidden="true">
         👤
       </div>
 
@@ -668,6 +685,7 @@
   role="dialog"
   aria-modal="true"
   aria-labelledby="confirm-title"
+  aria-describedby="confirm-message"
 >
 
   <div class="confirm-box">
@@ -675,6 +693,7 @@
     <div
       id="confirm-icon"
       class="confirm-icon"
+      aria-hidden="true"
     >
       ⚠️
     </div>
@@ -724,7 +743,7 @@
   style="display:none;"
 >
 
-  <span id="toast-icon">
+  <span id="toast-icon" aria-hidden="true">
     ✓
   </span>
 
@@ -748,10 +767,11 @@
     id="home-nav"
     class="nav-active"
     type="button"
+    aria-current="page"
     data-home
   >
 
-    <span>
+    <span aria-hidden="true">
       🏠
     </span>
 
@@ -767,7 +787,7 @@
     type="button"
   >
 
-    <span>
+    <span aria-hidden="true">
       👥
     </span>
 
@@ -783,7 +803,7 @@
     type="button"
   >
 
-    <span>
+    <span aria-hidden="true">
       👤
     </span>
 
@@ -806,4 +826,4 @@
 ></script>
 
 </body>
-          </html>
+        </html>
