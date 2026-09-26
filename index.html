@@ -1,829 +1,2307 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
+<meta name="theme-color" content="#08090C">
+<meta name="description" content="AnonyBoX — Discute anonymement.">
+<meta name="color-scheme" content="dark">
+<meta name="referrer" content="no-referrer">
+<title>AnonyBoX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
+<link rel="manifest" href="manifest.json">
+<style>
+/* ============================================================
+   ANONYBOX — DESIGN SYSTEM "INK / EMERALD / ANON"
+   ============================================================ */
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+:root {
+  --ink-0:#08090C; --ink-1:#0C0D12; --ink-2:#111219; --ink-3:#171923; --ink-4:#1E202B; --ink-5:#262835;
+  --slate-1:#F5F6FA; --slate-2:#C7C9D4; --slate-3:#A0A3B1; --slate-4:#6B6E80; --slate-5:#4A4D5C;
+  --emerald-2:#065F46; --emerald-3:#047857; --emerald-4:#059669; --emerald-5:#10B981; --emerald-6:#34D399; --emerald-7:#6EE7B7;
+  --teal-4:#2DD4BF; --amber-5:#F59E0B; --rose-5:#F43F5E; --green-5:#22C55E;
 
-  <meta
-    name="theme-color"
-    content="#07070d"
-  >
+  --bg-canvas:var(--ink-0); --fg-primary:var(--slate-1); --fg-secondary:var(--slate-3);
+  --fg-tertiary:var(--slate-4); --fg-quaternary:var(--slate-5);
+  --accent-primary:var(--emerald-5); --accent-secondary:var(--emerald-6); --accent-fg:#FFFFFF;
+  --success:var(--green-5); --warning:var(--amber-5); --danger:var(--rose-5); --info:var(--teal-4);
 
-  <meta
-    name="description"
-    content="AnonyBoX - Discute anonymement dans tes groupes."
-  >
+  --border-subtle:rgba(255,255,255,.045); --border-default:rgba(255,255,255,.075);
+  --border-strong:rgba(255,255,255,.12);
+  --surface-tint-1:rgba(255,255,255,.025); --surface-tint-2:rgba(255,255,255,.05); --surface-tint-3:rgba(255,255,255,.08);
 
-  <title>AnonyBoX</title>
+  --grad-brand:linear-gradient(135deg,#34D399 0%,#10B981 45%,#059669 100%);
+  --grad-tint:linear-gradient(160deg,rgba(16,185,129,.14),rgba(45,212,191,.04) 60%,transparent);
 
-  <link
-    rel="stylesheet"
-    href="style.css?v=2026"
-  >
+  --font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  --font-mono:'JetBrains Mono','SF Mono',ui-monospace,Menlo,monospace;
 
-  <link
-    rel="manifest"
-    href="manifest.json"
-  >
+  --text-2xs:.6875rem; --text-xs:.75rem; --text-sm:.8125rem; --text-base:.875rem; --text-md:.9375rem;
+  --text-lg:1.0625rem; --text-xl:1.25rem; --text-2xl:1.5rem; --text-4xl:clamp(2rem,5vw,2.5rem);
+
+  --leading-tight:1.15; --leading-snug:1.35; --leading-normal:1.55;
+  --tracking-tight:-.03em; --tracking-snug:-.015em; --tracking-widest:.18em;
+
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:20px; --space-6:24px;
+  --space-8:32px; --space-10:40px; --space-12:48px;
+
+  --radius-xs:8px; --radius-sm:12px; --radius-md:16px; --radius-lg:20px; --radius-xl:26px; --radius-2xl:32px; --radius-full:9999px;
+
+  --elevation-1:0 1px 2px rgba(0,0,0,.35),0 1px 1px rgba(0,0,0,.2);
+  --elevation-3:0 12px 32px rgba(0,0,0,.42),0 2px 6px rgba(0,0,0,.28);
+  --elevation-4:0 24px 64px rgba(0,0,0,.55),0 6px 16px rgba(0,0,0,.35);
+
+  --ease-out:cubic-bezier(.16,1,.3,1); --ease-in-out:cubic-bezier(.65,0,.35,1); --ease-spring:cubic-bezier(.34,1.56,.64,1);
+  --dur-instant:100ms; --dur-fast:160ms; --dur-base:240ms; --dur-slow:360ms;
+
+  --z-content:10; --z-sticky:100; --z-nav:1000; --z-menu:2000; --z-panel:3000; --z-modal:4000; --z-toast:5000;
+  --app-max:720px; --nav-h:76px;
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+
+  /* ⚠️ Les variables --cursor-mask et --cursor-text-emerald (SVG) ont été SUPPRIMÉES */
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CURSEURS — natifs, toujours visibles
+   ═══════════════════════════════════════════════════════════ */
+
+html, body { cursor: default; }
+
+/* ── Champs de saisie : I-beam natif + caret émeraude ── */
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not([type="color"]),
+textarea,
+[contenteditable="true"],
+[contenteditable=""],
+.message-box input,
+.search__input,
+.profile-card input {
+  cursor: text !important;
+  caret-color: var(--emerald-6) !important;
+}
+
+/* Toute la barre de saisie invite au clic */
+.message-box,
+.search {
+  cursor: text;
+}
+
+/* ── Éléments cliquables ── */
+button,
+a,
+[role="button"],
+label,
+select,
+summary,
+input[type="checkbox"],
+input[type="radio"],
+.group-card-content,
+.chat-group-button,
+.chat-back-button,
+.chat-menu-button,
+.header-action,
+.profile-button,
+.action,
+.reaction-chip,
+.section-head__action,
+.share-btn,
+.chat-menu button,
+.msg-actions button,
+.msg-actions .action-item,
+.bottom-nav button,
+.confirm-buttons button,
+.session-btn,
+.reply-preview__close,
+.group-info-header button,
+.emoji-row button,
+.message-bubble {
+  cursor: pointer !important;
+}
+
+/* ── États désactivés ── */
+button:disabled,
+[aria-disabled="true"],
+input:disabled,
+textarea:disabled {
+  cursor: not-allowed !important;
+}
+
+/* ── Liste des groupes ── */
+.groups,
+.home-groups-list,
+.group-card,
+.group-avatar,
+.group-info,
+.group-info strong,
+.group-info small {
+  cursor: pointer;
+}
+
+/* ── Spotlight ── */
+.spotlight {
+  position: fixed;
+  pointer-events: none;
+  z-index: 2;
+  inline-size: 320px;
+  block-size: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(16,185,129,0.18), transparent 62%);
+  transform: translate(-50%,-50%);
+  transition: opacity .3s var(--ease-out);
+  opacity: 0;
+  mix-blend-mode: screen;
+  filter: blur(10px);
+}
+body.spotlight-on .spotlight { opacity: 1; }
+
+/* ─── RESET ─── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{height:100%;-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  font-family:var(--font-sans);font-size:var(--text-base);line-height:var(--leading-normal);
+  letter-spacing:var(--tracking-snug);color:var(--fg-primary);background:var(--bg-canvas);
+  min-height:100dvh;overflow-x:hidden;
+  padding-bottom:calc(var(--nav-h) + var(--safe-bottom) + var(--space-4));
+  font-feature-settings:"ss01","cv02","cv11";
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+body.chat-open{overflow:hidden;padding-bottom:0}
+button,input,textarea{font:inherit;color:inherit}
+button{border:0;background:none;user-select:none}
+input,textarea{border:0;background:none;outline:none;-webkit-appearance:none;appearance:none}
+::selection{background:rgba(16,185,129,.35);color:#fff}
+:focus-visible{outline:2px solid var(--accent-primary);outline-offset:2px;border-radius:var(--radius-xs)}
+:focus:not(:focus-visible){outline:none}
+
+.ic{display:inline-block;inline-size:1em;block-size:1em;flex-shrink:0;vertical-align:-0.14em;overflow:visible}
+
+/* ─── AMBIENT ─── */
+.ambient{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.ambient::before{
+  content:"";position:absolute;inset:-10%;
+  background:
+    radial-gradient(42% 34% at 8% 4%,rgba(16,185,129,.20),transparent 62%),
+    radial-gradient(36% 30% at 96% 8%,rgba(5,150,105,.14),transparent 60%),
+    radial-gradient(60% 40% at 50% 110%,rgba(45,212,191,.06),transparent 60%);
+  filter:blur(60px) saturate(140%);
+  animation:drift 32s var(--ease-in-out) infinite alternate;
+}
+.ambient::after{
+  content:"";position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.016) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.016) 1px,transparent 1px);
+  background-size:48px 48px;
+  mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 25%,transparent 75%);
+  -webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 25%,transparent 75%);
+}
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+@keyframes drift{0%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(-2%,1.5%,0) scale(1.04)}100%{transform:translate3d(1.5%,-1%,0) scale(1.02)}}
+
+/* ─── LAYOUT ─── */
+.app{position:relative;z-index:var(--z-content);width:100%;max-width:var(--app-max);min-height:100dvh;margin-inline:auto;padding-inline:var(--space-5)}
+.skip-link{position:fixed;top:var(--space-3);left:50%;transform:translate(-50%,-200%);z-index:var(--z-toast);padding:var(--space-2) var(--space-4);background:var(--accent-primary);color:var(--accent-fg);font-size:var(--text-sm);font-weight:600;border-radius:var(--radius-full);transition:transform var(--dur-base) var(--ease-out)}
+.skip-link:focus{transform:translate(-50%,0)}
+
+/* ─── SCREENS ─── */
+.screen{display:none;width:100%;padding:var(--space-5) 0 var(--space-10);min-height:calc(100dvh - var(--nav-h))}
+.screen.active{display:block;animation:screenEnter var(--dur-slow) var(--ease-out) both}
+@keyframes screenEnter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─── HEADERS ─── */
+.app-header,.page-header{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);padding-block:var(--space-2)}
+.brand{display:flex;align-items:center;gap:var(--space-3);min-width:0}
+.logo{position:relative;display:grid;place-items:center;inline-size:48px;block-size:48px;flex-shrink:0;border-radius:var(--radius-md);font-size:26px;color:#fff;background:var(--grad-brand);box-shadow:0 8px 24px rgba(5,150,105,.4),inset 0 1px 0 rgba(255,255,255,.2)}
+.logo::after{content:"";position:absolute;inset:-1px;border-radius:inherit;background:linear-gradient(180deg,rgba(255,255,255,.25),transparent 40%);pointer-events:none;mask:linear-gradient(#000,transparent 60%);-webkit-mask:linear-gradient(#000,transparent 60%)}
+.welcome,.page-label{font-size:var(--text-2xs);font-weight:600;letter-spacing:var(--tracking-widest);text-transform:uppercase;color:var(--fg-quaternary)}
+.brand-text h1{margin-top:2px;font-size:var(--text-xl);font-weight:700;letter-spacing:var(--tracking-tight)}
+.profile-button{display:grid;place-items:center;inline-size:44px;block-size:44px;border-radius:var(--radius-full);color:var(--fg-secondary);background:var(--surface-tint-1);border:1px solid var(--border-subtle);font-size:20px;transition:all var(--dur-fast) var(--ease-out);position:relative}
+.profile-button:hover{background:var(--surface-tint-2);border-color:var(--border-default);color:var(--fg-primary)}
+.profile-button:active{transform:scale(.94)}
+.profile-button::after{
+  content:attr(data-mask);
+  position:absolute;
+  bottom:-2px;
+  left:50%;
+  transform:translateX(-50%);
+  font-family:var(--font-mono);
+  font-size:8.5px;
+  font-weight:600;
+  letter-spacing:.05em;
+  color:var(--emerald-6);
+  background:var(--bg-canvas);
+  padding:1px 5px;
+  border-radius:var(--radius-full);
+  border:1px solid rgba(110,231,183,.24);
+  white-space:nowrap;
+}
+
+.page-header{padding-block:var(--space-3) var(--space-6)}
+.page-header h2{margin-top:var(--space-1);font-size:var(--text-2xl);font-weight:700;letter-spacing:var(--tracking-tight)}
+.header-action{display:grid;place-items:center;inline-size:44px;block-size:44px;border-radius:var(--radius-md);font-size:22px;color:var(--accent-fg);background:var(--grad-brand);box-shadow:0 8px 24px rgba(5,150,105,.4),inset 0 1px 0 rgba(255,255,255,.2);transition:transform var(--dur-base) var(--ease-spring)}
+.header-action:hover{transform:scale(1.06) rotate(90deg)}
+.header-action:active{transform:scale(.94) rotate(90deg)}
+
+/* ─── PRIVACY BANNER ─── */
+.privacy-banner{
+  display:flex;align-items:center;gap:var(--space-3);
+  margin-top:var(--space-5);
+  padding:var(--space-3) var(--space-4);
+  border-radius:var(--radius-md);
+  background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(45,212,191,.03));
+  border:1px solid rgba(110,231,183,.16);
+  font-size:var(--text-xs);
+  color:var(--fg-secondary);
+  animation:fadeIn .5s var(--ease-out) both;
+}
+.privacy-banner__icon{
+  display:grid;place-items:center;
+  inline-size:32px;block-size:32px;flex-shrink:0;
+  border-radius:var(--radius-sm);
+  background:rgba(16,185,129,.12);
+  color:var(--emerald-6);
+  font-size:16px;
+}
+.privacy-banner__body{flex:1;min-width:0}
+.privacy-banner__body strong{display:block;font-size:var(--text-xs);font-weight:700;color:var(--fg-primary);letter-spacing:-.005em}
+.privacy-banner__body span{display:block;font-size:var(--text-2xs);color:var(--fg-tertiary);margin-top:1px}
+.privacy-banner__mask{
+  font-family:var(--font-mono);
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.08em;
+  color:var(--emerald-6);
+  padding:3px 8px;
+  border-radius:var(--radius-full);
+  background:rgba(16,185,129,.1);
+  border:1px solid rgba(110,231,183,.2);
+}
+
+/* ─── HERO ─── */
+.hero{position:relative;isolation:isolate;overflow:hidden;margin-top:var(--space-6);padding:var(--space-10) var(--space-6) var(--space-8);text-align:center;border-radius:var(--radius-2xl);border:1px solid var(--border-default);background:var(--grad-tint);backdrop-filter:blur(28px) saturate(160%);-webkit-backdrop-filter:blur(28px) saturate(160%);box-shadow:0 24px 64px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.06)}
+.hero::before{content:"";position:absolute;inset:0 20% auto;block-size:1px;background:linear-gradient(90deg,transparent,rgba(110,231,183,.7),transparent)}
+.hero-glow{position:absolute;inset:-180px 0 auto 0;margin-inline:auto;inline-size:340px;block-size:340px;background:radial-gradient(circle,rgba(16,185,129,.5),transparent 65%);filter:blur(60px);z-index:-1;animation:pulse 8s var(--ease-in-out) infinite}
+@keyframes pulse{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.15)}}
+.hero-icon{position:relative;display:grid;place-items:center;inline-size:80px;block-size:80px;margin:0 auto var(--space-5);font-size:46px;color:#fff;border-radius:var(--radius-xl);background:linear-gradient(145deg,#0F3A2C,#0A2018);border:1px solid rgba(110,231,183,.28);box-shadow:0 20px 48px rgba(5,150,105,.4),inset 0 1px 0 rgba(255,255,255,.12);animation:floatY 6s var(--ease-in-out) infinite}
+@keyframes floatY{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-8px) rotate(2deg)}}
+.hero-label{display:inline-flex;align-items:center;gap:var(--space-2);padding:var(--space-1) var(--space-3);font-size:var(--text-2xs);font-weight:700;letter-spacing:var(--tracking-widest);text-transform:uppercase;color:var(--emerald-7);background:rgba(16,185,129,.09);border:1px solid rgba(110,231,183,.18);border-radius:var(--radius-full)}
+.hero-label::before{content:"";inline-size:5px;block-size:5px;border-radius:50%;background:var(--emerald-6);box-shadow:0 0 8px var(--emerald-6);animation:dotPulse 2.4s var(--ease-in-out) infinite}
+@keyframes dotPulse{0%,100%{opacity:1}50%{opacity:.35}}
+.hero h2{margin-top:var(--space-4);font-size:var(--text-4xl);font-weight:800;line-height:var(--leading-tight);letter-spacing:var(--tracking-tight);text-wrap:balance}
+.hero h2 span{background:linear-gradient(135deg,#6EE7B7 0%,#34D399 50%,#2DD4BF 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-description{max-inline-size:340px;margin:var(--space-4) auto 0;font-size:var(--text-base);color:var(--fg-secondary);text-wrap:pretty}
+
+/* ─── ACTIONS ─── */
+.actions{display:grid;gap:var(--space-3);margin-top:var(--space-5)}
+.action{position:relative;isolation:isolate;overflow:hidden;display:flex;align-items:center;gap:var(--space-4);inline-size:100%;min-block-size:76px;padding:var(--space-4);text-align:left;border-radius:var(--radius-lg);transition:transform var(--dur-base) var(--ease-spring),border-color var(--dur-fast) var(--ease-out),background var(--dur-fast) var(--ease-out),box-shadow var(--dur-base) var(--ease-out)}
+.action:hover{transform:translateY(-2px)}
+.action:active{transform:scale(.985)}
+.action-icon{display:grid;place-items:center;inline-size:46px;block-size:46px;flex-shrink:0;border-radius:var(--radius-sm);font-size:22px}
+.action-text{flex:1;min-width:0}
+.action-text strong{display:block;font-size:var(--text-md);font-weight:600}
+.action-text small{display:block;margin-top:2px;font-size:var(--text-xs);font-weight:500}
+.action-arrow{display:grid;place-items:center;inline-size:20px;block-size:20px;font-size:20px;opacity:.6;transition:transform var(--dur-base) var(--ease-out),opacity var(--dur-fast) var(--ease-out)}
+.action:hover .action-arrow{transform:translateX(4px);opacity:1}
+.main-action{color:var(--accent-fg);background:var(--grad-brand);box-shadow:0 16px 40px rgba(5,150,105,.4),inset 0 1px 0 rgba(255,255,255,.2)}
+.main-action::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.18) 50%,transparent 60%);transform:translateX(-100%);transition:transform .8s var(--ease-out);pointer-events:none}
+.main-action:hover::before{transform:translateX(100%)}
+.main-action .action-icon{background:rgba(255,255,255,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.3)}
+.main-action .action-text small{color:rgba(255,255,255,.72)}
+.secondary-action{color:var(--fg-primary);background:var(--surface-tint-1);border:1px solid var(--border-default);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.secondary-action:hover{background:var(--surface-tint-2);border-color:var(--border-strong)}
+.secondary-action .action-icon{color:var(--emerald-6);background:rgba(16,185,129,.1);border:1px solid rgba(110,231,183,.18)}
+.secondary-action .action-text small{color:var(--fg-tertiary)}
+
+/* ─── SECTION HEAD ─── */
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--space-4);margin-bottom:var(--space-4);padding-inline:var(--space-1)}
+.section-head__label{font-size:var(--text-2xs);font-weight:700;letter-spacing:var(--tracking-widest);text-transform:uppercase;color:var(--fg-quaternary)}
+.section-head__title{margin-top:var(--space-1);font-size:var(--text-lg);font-weight:700;letter-spacing:var(--tracking-tight)}
+.section-head__action{display:inline-flex;align-items:center;gap:var(--space-1);padding:var(--space-2) var(--space-3);font-size:var(--text-xs);font-weight:600;color:var(--emerald-7);background:rgba(16,185,129,.08);border:1px solid rgba(110,231,183,.14);border-radius:var(--radius-full);transition:background var(--dur-fast) var(--ease-out),transform var(--dur-base) var(--ease-spring)}
+.section-head__action:hover{background:rgba(16,185,129,.15);transform:translateY(-1px)}
+.section-head__action .ic{font-size:14px}
+.home-groups-preview{margin-top:var(--space-8)}
+
+/* ─── SEARCH ─── */
+.search{position:relative;display:flex;align-items:center;gap:var(--space-3);block-size:52px;padding-inline:var(--space-4);border-radius:var(--radius-md);background:var(--surface-tint-1);border:1px solid var(--border-subtle);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);transition:border-color var(--dur-fast) var(--ease-out),background var(--dur-fast) var(--ease-out),box-shadow var(--dur-fast) var(--ease-out)}
+.search:focus-within{border-color:rgba(110,231,183,.5);background:var(--surface-tint-2);box-shadow:0 0 0 4px rgba(16,185,129,.1),inset 0 0 24px rgba(16,185,129,.05)}
+.search__icon{display:grid;place-items:center;inline-size:18px;block-size:18px;font-size:18px;color:var(--fg-tertiary);flex-shrink:0}
+.search__input{flex:1;min-width:0;font-size:var(--text-base);font-weight:500}
+.search__input::placeholder{color:var(--fg-quaternary)}
+.search__input::-webkit-search-cancel-button{-webkit-appearance:none}
+
+/* ─── GROUP LIST ─── */
+.groups,.home-groups-list{display:grid;gap:var(--space-1)}
+.group-card{position:relative;border-radius:var(--radius-lg)}
+.group-card-content{position:relative;display:flex;align-items:center;gap:var(--space-4);inline-size:100%;min-block-size:74px;padding:var(--space-3) var(--space-4);border-radius:var(--radius-lg);border:1px solid transparent;transition:background var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-spring)}
+.group-card-content:hover{background:var(--surface-tint-1);border-color:var(--border-subtle)}
+.group-card-content:active{transform:scale(.99)}
+.group-avatar{position:relative;display:grid;place-items:center;inline-size:52px;block-size:52px;flex-shrink:0;border-radius:var(--radius-full);font-size:24px;color:#fff;background:linear-gradient(145deg,#0F3A2C,#0A2018);border:1px solid rgba(110,231,183,.22);box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+.group-avatar::after{content:"";position:absolute;inset:-2px;border-radius:inherit;padding:1.5px;background:linear-gradient(135deg,var(--emerald-6),transparent 60%,var(--teal-4));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.35;transition:opacity var(--dur-base) var(--ease-out)}
+.group-card-content:hover .group-avatar::after{opacity:1}
+.group-info{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}
+.group-info strong{font-size:var(--text-md);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.group-info small{font-family:var(--font-mono);font-size:var(--text-2xs);font-weight:500;color:var(--fg-tertiary);letter-spacing:.08em}
+.group-unread-dot{position:absolute;right:3px;bottom:3px;inline-size:12px;block-size:12px;border-radius:50%;background:var(--emerald-6);border:2.5px solid var(--bg-canvas);box-shadow:0 0 12px rgba(52,211,153,.8);animation:dotPulse 2s var(--ease-in-out) infinite}
+
+/* ─── EMPTY ─── */
+.empty-groups,.empty-messages{display:flex;flex-direction:column;align-items:center;text-align:center;padding:var(--space-12) var(--space-6);color:var(--fg-tertiary)}
+.empty-icon{position:relative;display:grid;place-items:center;inline-size:80px;block-size:80px;font-size:38px;color:#fff;border-radius:var(--radius-xl);background:var(--surface-tint-1);border:1px solid var(--border-default)}
+.empty-icon::after{content:"";position:absolute;inset:-4px;border-radius:inherit;background:radial-gradient(circle,rgba(16,185,129,.28),transparent 70%);filter:blur(16px);z-index:-1}
+.empty-icon .ic--neutral{color:var(--fg-secondary)}
+.empty-groups h3,.empty-messages h3{margin-top:var(--space-5);font-size:var(--text-lg);font-weight:600;color:var(--fg-primary)}
+.empty-groups p,.empty-messages p{margin-top:var(--space-2);font-size:var(--text-sm);color:var(--fg-tertiary);max-inline-size:260px}
+.empty-groups small,.empty-messages small{display:block;margin-top:var(--space-2);font-size:var(--text-xs);color:var(--fg-quaternary)}
+
+/* ─── CHAT ─── */
+.chat-page{position:fixed;inset:0;z-index:var(--z-modal);display:none;flex-direction:column;inline-size:100%;max-inline-size:var(--app-max);margin-inline:auto;block-size:100dvh;padding:0;background:var(--bg-canvas);visibility:hidden;opacity:0;transform:translateX(24px);transition:transform var(--dur-slow) var(--ease-out),opacity var(--dur-base) var(--ease-out);overflow:hidden}
+.chat-page::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(60% 42% at 50% -5%,rgba(16,185,129,.16),transparent 60%),radial-gradient(40% 30% at 100% 100%,rgba(45,212,191,.06),transparent 60%)}
+#chat-screen.active{display:flex;visibility:visible;opacity:1;transform:translateX(0)}
+
+.chat-topbar{position:relative;z-index:var(--z-sticky);display:flex;align-items:center;gap:var(--space-2);min-block-size:72px;padding:var(--space-2) var(--space-3);border-bottom:1px solid var(--border-subtle);background:rgba(8,9,12,.72);backdrop-filter:blur(28px) saturate(160%);-webkit-backdrop-filter:blur(28px) saturate(160%)}
+.chat-back-button,.chat-menu-button{display:grid;place-items:center;inline-size:42px;block-size:42px;flex-shrink:0;border-radius:var(--radius-full);color:var(--fg-secondary);font-size:22px;transition:background var(--dur-fast) var(--ease-out),color var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-spring)}
+.chat-back-button:hover,.chat-menu-button:hover{background:var(--surface-tint-2);color:var(--fg-primary)}
+.chat-back-button:active,.chat-menu-button:active{transform:scale(.9)}
+.chat-group-button{display:flex;align-items:center;gap:var(--space-3);flex:1;min-width:0;padding:var(--space-1) var(--space-2);text-align:left;border-radius:var(--radius-md);transition:background var(--dur-fast) var(--ease-out)}
+.chat-group-button:hover{background:var(--surface-tint-1)}
+.chat-avatar{position:relative;display:grid;place-items:center;inline-size:42px;block-size:42px;flex-shrink:0;font-size:22px;color:#fff;border-radius:var(--radius-full);background:linear-gradient(145deg,#0F3A2C,#0A2018);border:1px solid rgba(110,231,183,.25)}
+.chat-avatar::after{content:"";position:absolute;inset:-1.5px;border-radius:inherit;padding:1.5px;background:linear-gradient(135deg,var(--emerald-6),transparent 55%,var(--teal-4));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.chat-group-info{display:flex;flex-direction:column;justify-content:center;gap:2px;min-width:0;flex:1}
+.chat-title{display:block;font-size:var(--text-md);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chat-status{display:flex;align-items:center;gap:var(--space-2);font-size:var(--text-2xs);font-weight:500;color:var(--fg-tertiary);transition:color var(--dur-base) var(--ease-out)}
+
+.presence-dot{display:inline-grid;inline-size:6px;block-size:6px;border-radius:50%;background:var(--success);box-shadow:0 0 8px var(--success);animation:dotPulse 2s var(--ease-in-out) infinite}
+
+.chat-status.is-typing{color:var(--emerald-6)}
+.typing-dots{display:inline-flex;gap:2px;align-items:center}
+.typing-dots span{inline-size:3px;block-size:3px;border-radius:50%;background:currentColor;animation:typingBounce 1.2s var(--ease-in-out) infinite}
+.typing-dots span:nth-child(2){animation-delay:.15s}
+.typing-dots span:nth-child(3){animation-delay:.3s}
+@keyframes typingBounce{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-3px);opacity:1}}
+
+.crypto-chip{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:9.5px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;
+  color:var(--emerald-6);
+  padding:2px 7px;border-radius:var(--radius-full);
+  background:rgba(16,185,129,.12);
+  border:1px solid rgba(110,231,183,.2);
+  margin-left:auto;
+}
+.crypto-chip .ic{font-size:10px}
+
+/* ─── MENU ─── */
+.chat-menu{position:absolute;top:66px;right:var(--space-3);z-index:var(--z-menu);display:flex;flex-direction:column;gap:2px;inline-size:240px;padding:var(--space-2);border-radius:var(--radius-lg);background:rgba(20,21,28,.94);border:1px solid var(--border-strong);box-shadow:var(--elevation-4);backdrop-filter:blur(40px) saturate(180%);-webkit-backdrop-filter:blur(40px) saturate(180%);animation:menuEnter var(--dur-base) var(--ease-out);transform-origin:top right}
+@keyframes menuEnter{from{opacity:0;transform:scale(.95) translateY(-4px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.chat-menu button{display:flex;align-items:center;gap:var(--space-3);inline-size:100%;min-block-size:44px;padding:var(--space-2) var(--space-3);font-size:var(--text-sm);font-weight:500;text-align:left;border-radius:var(--radius-sm);color:var(--fg-primary);transition:background var(--dur-instant) var(--ease-out)}
+.chat-menu button:hover{background:var(--surface-tint-2)}
+.chat-menu button .ic{font-size:18px;color:var(--fg-tertiary)}
+.chat-menu button:hover .ic{color:var(--fg-primary)}
+.chat-menu button[data-delete-group]{color:var(--danger)}
+.chat-menu button[data-delete-group]:hover{background:rgba(244,63,94,.12)}
+.chat-menu button[data-delete-group] .ic{color:var(--danger)}
+
+/* ─── GROUP INFO ─── */
+.group-info-panel{position:absolute;inset:0;z-index:var(--z-panel);display:flex;flex-direction:column;background:rgba(6,7,11,.96);backdrop-filter:blur(40px) saturate(160%);-webkit-backdrop-filter:blur(40px) saturate(160%);overflow-y:auto;animation:panelEnter var(--dur-slow) var(--ease-out)}
+@keyframes panelEnter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.group-info-header{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3) var(--space-4);border-bottom:1px solid var(--border-subtle);background:rgba(8,9,12,.72);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
+.group-info-header button{display:grid;place-items:center;inline-size:40px;block-size:40px;border-radius:var(--radius-full);color:var(--fg-secondary);font-size:20px;background:var(--surface-tint-1);border:1px solid var(--border-subtle);transition:all var(--dur-fast) var(--ease-out)}
+.group-info-header button:hover{background:var(--surface-tint-2);color:var(--fg-primary)}
+.group-info-header h2{font-size:var(--text-lg);font-weight:700}
+.group-info-content{display:flex;flex-direction:column;align-items:center;text-align:center;max-inline-size:400px;margin-inline:auto;padding:var(--space-12) var(--space-6);inline-size:100%}
+.large-group-avatar{position:relative;display:grid;place-items:center;inline-size:104px;block-size:104px;font-size:52px;color:#fff;border-radius:var(--radius-full);background:linear-gradient(145deg,#0F3A2C,#0A2018);border:1px solid rgba(110,231,183,.28);box-shadow:0 24px 56px rgba(5,150,105,.4),inset 0 2px 0 rgba(255,255,255,.1)}
+.large-group-avatar::after{content:"";position:absolute;inset:-5px;border-radius:inherit;padding:3px;background:conic-gradient(from 0deg,var(--emerald-6),var(--teal-4),var(--emerald-6));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:spin 12s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.group-info-content h3{margin-top:var(--space-6);font-size:var(--text-2xl);font-weight:700;letter-spacing:var(--tracking-tight)}
+.group-info-content>p{margin-top:var(--space-2);font-size:var(--text-sm);color:var(--fg-tertiary)}
+.info-row{display:flex;align-items:center;justify-content:space-between;inline-size:100%;margin-top:var(--space-3);padding:var(--space-4) var(--space-5);border-radius:var(--radius-md);background:var(--surface-tint-1);border:1px solid var(--border-subtle);font-size:var(--text-sm);color:var(--fg-secondary)}
+.info-row:first-of-type{margin-top:var(--space-8)}
+.info-row>span{display:inline-flex;align-items:center;gap:var(--space-2)}
+.info-row .ic{font-size:16px;color:var(--fg-tertiary)}
+.info-row strong{font-weight:600;color:var(--fg-primary);letter-spacing:.02em}
+#info-group-code{font-family:var(--font-mono);letter-spacing:.08em}
+.info-online-dot{display:inline-block;inline-size:8px;block-size:8px;border-radius:50%;background:var(--success);box-shadow:0 0 8px var(--success)}
+
+.share-btn{display:inline-flex;align-items:center;gap:var(--space-2);margin-top:var(--space-6);padding:var(--space-3) var(--space-5);font-size:var(--text-sm);font-weight:600;color:var(--accent-fg);background:var(--grad-brand);border-radius:var(--radius-full);box-shadow:0 8px 24px rgba(5,150,105,.4);transition:transform var(--dur-fast) var(--ease-spring)}
+.share-btn .ic{font-size:16px}
+.share-btn:hover{transform:translateY(-2px)}
+.share-btn:active{transform:scale(.96)}
+
+/* ─── MESSAGES ─── */
+.messages{position:relative;z-index:1;display:flex;flex-direction:column;flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:var(--space-5) var(--space-4);scroll-behavior:smooth}
+.message-row{display:flex;flex-direction:column;align-items:flex-start;inline-size:100%;margin-bottom:var(--space-3);animation:messageIn var(--dur-slow) var(--ease-spring) both}
+@keyframes messageIn{from{opacity:0;transform:translateY(6px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.message-bubble{position:relative;max-inline-size:82%;padding:var(--space-3) var(--space-4) var(--space-2);border-radius:20px 20px 20px 6px;background:var(--surface-tint-2);border:1px solid var(--border-subtle);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);font-size:var(--text-base);line-height:var(--leading-snug);word-break:break-word;box-shadow:var(--elevation-1);cursor:pointer;transition:background var(--dur-fast) var(--ease-out)}
+.message-bubble:hover{background:var(--surface-tint-3)}
+.message-text{display:block;white-space:pre-wrap;text-wrap:pretty}
+.message-text a{color:var(--emerald-6);text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1px}
+.message-time{display:block;margin-top:var(--space-1);font-size:var(--text-2xs);font-weight:500;letter-spacing:.03em;color:var(--fg-quaternary);text-align:right}
+.message-row.mine{align-items:flex-end}
+.message-row.mine .message-bubble{border-radius:20px 20px 6px 20px;background:var(--grad-brand);border-color:transparent;box-shadow:0 8px 24px rgba(5,150,105,.4),inset 0 1px 0 rgba(255,255,255,.15)}
+.message-row.mine .message-time{color:rgba(255,255,255,.72)}
+.message-row.mine .message-text a{color:#fff;text-decoration-color:rgba(255,255,255,.5)}
+
+.reply-quote{display:flex;flex-direction:column;gap:2px;margin-bottom:var(--space-2);padding:var(--space-2) var(--space-3);border-left:2px solid var(--emerald-5);background:rgba(255,255,255,.05);border-radius:0 var(--radius-xs) var(--radius-xs) 0;font-size:var(--text-xs);line-height:1.3}
+.message-row.mine .reply-quote{border-left-color:rgba(255,255,255,.7);background:rgba(0,0,0,.15)}
+.reply-quote strong{color:var(--emerald-6);font-weight:600;font-size:var(--text-2xs)}
+.message-row.mine .reply-quote strong{color:rgba(255,255,255,.9)}
+.reply-quote span{color:var(--fg-tertiary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-inline-size:200px}
+.message-row.mine .reply-quote span{color:rgba(255,255,255,.75)}
+
+.reactions-bar{display:flex;flex-wrap:wrap;gap:4px;margin-top:var(--space-1);margin-inline-start:var(--space-3)}
+.message-row.mine .reactions-bar{margin-inline-start:0;margin-inline-end:var(--space-3);justify-content:flex-end}
+.reaction-chip{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;font-size:11px;font-weight:600;background:var(--surface-tint-3);border:1px solid var(--border-default);border-radius:var(--radius-full);color:var(--fg-primary);transition:transform var(--dur-fast) var(--ease-spring),background var(--dur-fast) var(--ease-out)}
+.reaction-chip .ic{font-size:14px}
+.reaction-chip:hover{transform:scale(1.06)}
+.reaction-chip.mine{background:rgba(16,185,129,.16);border-color:rgba(110,231,183,.4);color:var(--emerald-7)}
+
+.date-separator{display:flex;align-items:center;justify-content:center;gap:var(--space-3);margin:var(--space-5) 0 var(--space-4);font-size:var(--text-2xs);font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-quaternary)}
+.date-separator::before,.date-separator::after{content:"";flex:1;block-size:1px;background:var(--border-subtle)}
+
+.msg-actions{position:fixed;z-index:var(--z-menu);display:flex;flex-direction:column;gap:2px;min-inline-size:200px;padding:var(--space-2);border-radius:var(--radius-lg);background:rgba(20,21,28,.96);border:1px solid var(--border-strong);box-shadow:var(--elevation-4);backdrop-filter:blur(40px) saturate(180%);-webkit-backdrop-filter:blur(40px) saturate(180%);animation:menuEnter var(--dur-base) var(--ease-out);transform-origin:top left}
+.msg-actions .emoji-row{display:flex;gap:2px;padding:var(--space-1) 0 var(--space-2);border-bottom:1px solid var(--border-subtle);margin-bottom:var(--space-1)}
+.msg-actions .emoji-row button{inline-size:38px;block-size:38px;border-radius:var(--radius-sm);font-size:22px;display:grid;place-items:center;color:var(--fg-primary);transition:background var(--dur-instant) var(--ease-out),transform var(--dur-fast) var(--ease-spring)}
+.msg-actions .emoji-row button:hover{background:var(--surface-tint-2);transform:scale(1.15)}
+.msg-actions .emoji-row button[data-emoji="❤️"] .ic{color:#F43F5E}
+.msg-actions .emoji-row button[data-emoji="👍"] .ic{color:#60A5FA}
+.msg-actions .emoji-row button[data-emoji="😂"] .ic{color:#FBBF24}
+.msg-actions .emoji-row button[data-emoji="🔥"] .ic{color:#F97316}
+.msg-actions .emoji-row button[data-emoji="😮"] .ic{color:#A78BFA}
+.msg-actions .emoji-row button[data-emoji="😢"] .ic{color:#38BDF8}
+.msg-actions .action-item{display:flex;align-items:center;gap:var(--space-3);inline-size:100%;min-block-size:40px;padding:var(--space-2) var(--space-3);font-size:var(--text-sm);text-align:left;border-radius:var(--radius-sm);color:var(--fg-primary);transition:background var(--dur-instant) var(--ease-out)}
+.msg-actions .action-item .ic{font-size:18px;color:var(--fg-tertiary)}
+.msg-actions .action-item:hover{background:var(--surface-tint-2)}
+.msg-actions .action-item:hover .ic{color:var(--fg-primary)}
+.msg-actions .action-item.danger{color:var(--danger)}
+.msg-actions .action-item.danger .ic{color:var(--danger)}
+.msg-actions .action-item.danger:hover{background:rgba(244,63,94,.12)}
+
+.reply-preview{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-2);padding:var(--space-2) var(--space-3);border-left:2px solid var(--emerald-5);background:rgba(16,185,129,.06);border-radius:0 var(--radius-sm) var(--radius-sm) 0}
+.reply-preview__body{flex:1;min-width:0}
+.reply-preview__body strong{display:block;font-size:var(--text-2xs);color:var(--emerald-6);font-weight:600}
+.reply-preview__body span{display:block;font-size:var(--text-xs);color:var(--fg-tertiary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.reply-preview__close{display:grid;place-items:center;inline-size:28px;block-size:28px;border-radius:var(--radius-full);color:var(--fg-tertiary);font-size:16px;transition:background var(--dur-fast) var(--ease-out),color var(--dur-fast) var(--ease-out)}
+.reply-preview__close:hover{background:var(--surface-tint-2);color:var(--fg-primary)}
+
+/* ─── COMPOSER ─── */
+.message-area{position:relative;z-index:var(--z-sticky);flex-shrink:0;padding:var(--space-3) var(--space-4) max(var(--space-3),var(--safe-bottom));border-top:1px solid var(--border-subtle);background:rgba(8,9,12,.75);backdrop-filter:blur(28px) saturate(160%);-webkit-backdrop-filter:blur(28px) saturate(160%)}
+.message-box{display:flex;align-items:center;gap:var(--space-2);min-block-size:52px;padding:var(--space-1) var(--space-1) var(--space-1) var(--space-5);border-radius:var(--radius-full);background:var(--surface-tint-2);border:1px solid var(--border-default);transition:border-color var(--dur-fast) var(--ease-out),background var(--dur-fast) var(--ease-out),box-shadow var(--dur-fast) var(--ease-out)}
+.message-box:focus-within{border-color:rgba(110,231,183,.55);background:var(--surface-tint-3);box-shadow:0 0 0 4px rgba(16,185,129,.1),inset 0 0 24px rgba(16,185,129,.05)}
+.message-box input{flex:1;min-width:0;block-size:42px;line-height:42px;font-size:var(--text-base);font-weight:500;caret-color:var(--emerald-6)}
+.message-box input::placeholder{color:var(--fg-quaternary)}
+.message-box button{display:grid;place-items:center;inline-size:42px;block-size:42px;flex-shrink:0;border-radius:var(--radius-full);color:var(--accent-fg);font-size:18px;background:var(--grad-brand);box-shadow:0 6px 20px rgba(5,150,105,.45),inset 0 1px 0 rgba(255,255,255,.2);transition:transform var(--dur-fast) var(--ease-spring),box-shadow var(--dur-base) var(--ease-out)}
+.message-box button:active{transform:scale(.88)}
+#message-input{caret-color:var(--emerald-6) !important}
+
+/* ─── PROFILE ─── */
+.profile-card{position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;text-align:center;margin-top:var(--space-6);padding:var(--space-10) var(--space-6) var(--space-6);border-radius:var(--radius-2xl);border:1px solid var(--border-default);background:var(--grad-tint);backdrop-filter:blur(28px) saturate(160%);-webkit-backdrop-filter:blur(28px) saturate(160%);box-shadow:0 24px 64px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.06)}
+.profile-card::before{content:"";position:absolute;inset:0 20% auto;block-size:1px;background:linear-gradient(90deg,transparent,rgba(110,231,183,.7),transparent)}
+.profile-icon{position:relative;display:grid;place-items:center;inline-size:84px;block-size:84px;font-size:38px;color:#fff;border-radius:var(--radius-full);background:linear-gradient(145deg,#0F3A2C,#0A2018);border:1px solid rgba(110,231,183,.25);box-shadow:0 20px 48px rgba(5,150,105,.4),inset 0 2px 0 rgba(255,255,255,.1)}
+.profile-icon::after{content:"";position:absolute;inset:-4px;border-radius:inherit;padding:2px;background:conic-gradient(from 0deg,var(--emerald-6),transparent 40%,var(--teal-4),transparent 80%,var(--emerald-6));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.profile-card h3{margin-top:var(--space-5);font-size:var(--text-xl);font-weight:700;letter-spacing:var(--tracking-tight)}
+.profile-card>p{margin-top:var(--space-2);font-size:var(--text-sm);color:var(--fg-tertiary)}
+
+.input-label{align-self:flex-start;margin-top:var(--space-8);margin-bottom:var(--space-2);font-size:var(--text-2xs);font-weight:700;letter-spacing:var(--tracking-widest);text-transform:uppercase;color:var(--fg-quaternary)}
+.profile-card input{inline-size:100%;block-size:52px;padding-inline:var(--space-4);font-size:var(--text-base);font-weight:500;background:var(--surface-tint-2);border:1px solid var(--border-default);border-radius:var(--radius-md);transition:border-color var(--dur-fast) var(--ease-out),box-shadow var(--dur-fast) var(--ease-out)}
+.profile-card input:focus{border-color:rgba(110,231,183,.55);box-shadow:0 0 0 4px rgba(16,185,129,.1)}
+.profile-card>button{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);inline-size:100%;block-size:52px;margin-top:var(--space-3);font-size:var(--text-base);font-weight:600;color:var(--accent-fg);background:var(--grad-brand);border-radius:var(--radius-md);box-shadow:0 10px 28px rgba(5,150,105,.4),inset 0 1px 0 rgba(255,255,255,.2);transition:transform var(--dur-fast) var(--ease-spring),box-shadow var(--dur-base) var(--ease-out)}
+.profile-card>button .ic{font-size:18px}
+.profile-card>button:active{transform:scale(.98)}
+
+/* ─── SESSION CARD ─── */
+.session-card{
+  margin-top:var(--space-5);
+  padding:var(--space-5);
+  border-radius:var(--radius-xl);
+  background:linear-gradient(160deg,rgba(16,185,129,.08),rgba(10,10,20,.9) 60%);
+  border:1px solid rgba(110,231,183,.14);
+  text-align:left;
+  animation:fadeIn .5s var(--ease-out) both;
+}
+.session-card__head{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-4)}
+.session-card__icon{display:grid;place-items:center;inline-size:40px;block-size:40px;flex-shrink:0;border-radius:var(--radius-md);background:rgba(16,185,129,.14);color:var(--emerald-6);font-size:20px;border:1px solid rgba(110,231,183,.2)}
+.session-card__head strong{display:block;font-size:var(--text-sm);font-weight:700;color:var(--fg-primary)}
+.session-card__head small{display:block;font-size:var(--text-2xs);color:var(--fg-tertiary);margin-top:2px}
+.session-card__row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:var(--space-3) 0;
+  border-bottom:1px dashed rgba(255,255,255,.06);
+  font-size:var(--text-xs);color:var(--fg-tertiary);
+}
+.session-card__row:last-of-type{border-bottom:0}
+.session-card__row .k{display:inline-flex;align-items:center;gap:var(--space-2)}
+.session-card__row .k .ic{font-size:15px;color:var(--fg-quaternary)}
+.session-card__row .v{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--fg-primary);font-weight:600;letter-spacing:.04em}
+.session-card__row .v.badge{
+  font-family:var(--font-sans);
+  font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--emerald-6);
+  padding:2px 8px;border-radius:var(--radius-full);
+  background:rgba(16,185,129,.12);
+  border:1px solid rgba(110,231,183,.2);
+}
+.session-actions{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-2);margin-top:var(--space-4)}
+.session-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);
+  min-block-size:44px;padding:var(--space-2) var(--space-3);
+  border-radius:var(--radius-md);
+  font-size:var(--text-xs);font-weight:600;
+  background:var(--surface-tint-2);border:1px solid var(--border-default);color:var(--fg-primary);
+  transition:transform var(--dur-fast) var(--ease-spring),background var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out);
+}
+.session-btn .ic{font-size:15px}
+.session-btn:hover{background:var(--surface-tint-3);border-color:var(--border-strong);transform:translateY(-1px)}
+.session-btn:active{transform:scale(.97)}
+.session-btn--danger{color:var(--danger);border-color:rgba(244,63,94,.24);background:rgba(244,63,94,.08)}
+.session-btn--danger:hover{background:rgba(244,63,94,.14)}
+
+/* ─── NAV ─── */
+.bottom-nav{position:fixed;left:50%;bottom:max(var(--space-4),var(--safe-bottom));transform:translateX(-50%);z-index:var(--z-nav);display:grid;grid-template-columns:repeat(3,1fr);gap:2px;inline-size:min(400px,calc(100vw - var(--space-8)));block-size:68px;padding:6px;border-radius:var(--radius-full);background:rgba(17,18,25,.72);border:1px solid var(--border-strong);box-shadow:var(--elevation-3),inset 0 1px 0 rgba(255,255,255,.08);backdrop-filter:blur(40px) saturate(180%);-webkit-backdrop-filter:blur(40px) saturate(180%)}
+.bottom-nav button{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border-radius:var(--radius-full);color:var(--fg-tertiary);transition:color var(--dur-base) var(--ease-out),background var(--dur-slow) var(--ease-out),transform var(--dur-fast) var(--ease-spring)}
+.bottom-nav button>span{display:grid;place-items:center;font-size:22px;line-height:1;transition:transform var(--dur-slow) var(--ease-spring)}
+.bottom-nav button>small{font-size:9.5px;font-weight:600;letter-spacing:.02em}
+.bottom-nav button:active{transform:scale(.94)}
+.bottom-nav button.nav-active{color:var(--accent-fg);background:var(--grad-brand);box-shadow:0 8px 24px rgba(5,150,105,.5),inset 0 1px 0 rgba(255,255,255,.2)}
+.bottom-nav button.nav-active>span{transform:scale(1.1)}
+
+/* ─── MODAL ─── */
+.confirm-overlay{position:fixed;inset:0;z-index:var(--z-modal);display:grid;place-items:center;padding:var(--space-5);background:rgba(4,5,8,.72);backdrop-filter:blur(12px) saturate(150%);-webkit-backdrop-filter:blur(12px) saturate(150%);animation:fadeIn var(--dur-base) var(--ease-out)}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.confirm-box{position:relative;overflow:hidden;inline-size:100%;max-inline-size:370px;padding:var(--space-8) var(--space-6) var(--space-6);text-align:center;border-radius:var(--radius-2xl);background:rgba(20,21,28,.96);border:1px solid var(--border-strong);box-shadow:var(--elevation-4);backdrop-filter:blur(40px) saturate(180%);-webkit-backdrop-filter:blur(40px) saturate(180%);animation:modalEnter var(--dur-slow) var(--ease-spring)}
+.confirm-box::before{content:"";position:absolute;inset:0 20% auto;block-size:1px;background:linear-gradient(90deg,transparent,rgba(110,231,183,.6),transparent)}
+@keyframes modalEnter{from{opacity:0;transform:scale(.94) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.confirm-icon{display:grid;place-items:center;inline-size:60px;block-size:60px;margin:0 auto;font-size:32px;border-radius:var(--radius-lg);background:var(--surface-tint-3);border:1px solid var(--border-default);color:var(--warning)}
+.confirm-icon[data-tone="danger"]{color:var(--danger)}
+.confirm-icon[data-tone="neutral"]{color:var(--emerald-6)}
+.confirm-box h3{margin-top:var(--space-5);font-size:var(--text-lg);font-weight:700}
+.confirm-box p{margin-top:var(--space-3);font-size:var(--text-sm);color:var(--fg-tertiary)}
+.confirm-buttons{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3);margin-top:var(--space-6)}
+.confirm-buttons button{block-size:48px;font-size:var(--text-sm);font-weight:600;border-radius:var(--radius-md);transition:transform var(--dur-fast) var(--ease-spring),filter var(--dur-fast) var(--ease-out)}
+.confirm-buttons button:active{transform:scale(.96)}
+.confirm-cancel{color:var(--fg-primary);background:var(--surface-tint-3);border:1px solid var(--border-subtle)}
+.confirm-ok{color:var(--accent-fg);background:var(--grad-brand);box-shadow:0 8px 24px rgba(5,150,105,.4)}
+
+/* ─── TOAST ─── */
+.toast{position:fixed;left:50%;bottom:calc(var(--nav-h) + var(--safe-bottom) + var(--space-6));transform:translateX(-50%);z-index:var(--z-toast);display:flex;align-items:center;gap:var(--space-3);min-inline-size:220px;max-inline-size:calc(100vw - var(--space-8));padding:var(--space-3) var(--space-5);font-size:var(--text-sm);font-weight:600;color:var(--fg-primary);background:rgba(24,25,34,.94);border:1px solid var(--border-strong);border-radius:var(--radius-lg);box-shadow:var(--elevation-4);backdrop-filter:blur(40px) saturate(180%);-webkit-backdrop-filter:blur(40px) saturate(180%);animation:toastEnter var(--dur-slow) var(--ease-spring)}
+@keyframes toastEnter{from{opacity:0;transform:translate(-50%,16px) scale(.94)}to{opacity:1;transform:translate(-50%,0) scale(1)}}
+#toast-icon{display:grid;place-items:center;inline-size:22px;block-size:22px;font-size:14px;border-radius:var(--radius-full);color:var(--success);background:rgba(34,197,94,.12)}
+#toast-icon[data-tone="warn"]{color:var(--warning);background:rgba(245,158,11,.14)}
+#toast-icon[data-tone="danger"]{color:var(--danger);background:rgba(244,63,94,.14)}
+#toast-icon[data-tone="loading"]{color:var(--emerald-6);background:rgba(16,185,129,.14)}
+#toast-icon .ic--spin{animation:spin .9s linear infinite}
+
+::-webkit-scrollbar{inline-size:5px;block-size:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:99px}
+::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.16)}
+*{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.08) transparent}
+
+.home-screen{position:relative}
+.home-screen::after{
+  content:"";
+  position:fixed;top:118px;right:24px;z-index:5;
+  inline-size:52px;block-size:52px;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.6c-3.55 0-6.4 2.85-6.4 6.4v10.8l2.05-1.65 1.85 1.65 2.5-1.75 2.5 1.75 1.85-1.65 2.05 1.65V9c0-3.55-2.85-6.4-6.4-6.4Z' fill='%236EE7B7'/%3E%3Ccircle cx='9.35' cy='10' r='1.05' fill='%2308090C'/%3E%3Ccircle cx='14.65' cy='10' r='1.05' fill='%2308090C'/%3E%3C/svg%3E");
+  background-size:contain;background-repeat:no-repeat;background-position:center;
+  filter:drop-shadow(0 12px 28px rgba(16,185,129,.5));
+  animation:ghostFloat 6s var(--ease-in-out) infinite;
+}
+@keyframes ghostFloat{0%,100%{transform:translateY(0) rotate(-4deg)}25%{transform:translateY(-8px) rotate(2deg)}50%{transform:translateY(-14px) rotate(4deg)}75%{transform:translateY(-7px) rotate(-2deg)}}
+
+/* ─── BROUILLAGE ─── */
+body.brouille .group-info strong,
+body.brouille .chat-title,
+body.brouille .reply-quote strong,
+body.brouille .info-row strong {
+  filter: blur(4.2px);
+  transition: filter var(--dur-base) var(--ease-out);
+}
+body.brouille .group-card-content:hover .group-info strong,
+body.brouille .chat-group-button:hover .chat-title {
+  filter: blur(0);
+}
+body.brouille .messages .reply-quote strong { filter: blur(3px); }
+body.brouille .message-time { filter: blur(3px); }
+
+@media (max-width:440px){
+  :root{--space-5:16px;--space-6:20px;--space-8:26px;--space-10:32px;--space-12:40px}
+  .app{padding-inline:var(--space-4)}
+  .hero{padding:var(--space-8) var(--space-5) var(--space-6)}
+  .hero h2{font-size:1.75rem}
+  .message-bubble{max-inline-size:86%}
+  .bottom-nav{inline-size:calc(100vw - var(--space-6))}
+  .home-screen::after{top:108px;right:14px;inline-size:44px;block-size:44px}
+  .session-actions{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+</style>
 </head>
-
 <body>
+<!-- ═══ ICON SPRITE ═══ -->
+<svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true">
+  <defs>
+    <symbol id="i-ghost" viewBox="0 0 24 24">
+      <path d="M12 2.6c-3.55 0-6.4 2.85-6.4 6.4v10.8l2.05-1.65 1.85 1.65 2.5-1.75 2.5 1.75 1.85-1.65 2.05 1.65V9c0-3.55-2.85-6.4-6.4-6.4Z" fill="currentColor"/>
+      <circle cx="9.35" cy="10" r="1.05" fill="#08090C"/>
+      <circle cx="14.65" cy="10" r="1.05" fill="#08090C"/>
+    </symbol>
+    <symbol id="i-user" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="8" r="3.6"/>
+        <path d="M4.8 20c0-3.8 3.2-6.6 7.2-6.6s7.2 2.8 7.2 6.6"/>
+      </g>
+    </symbol>
+    <symbol id="i-mask" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 6.5c2.4-.6 5.2-.9 8-.9s5.6.3 8 .9c0 6.8-3.5 12-8 12S4 13.3 4 6.5Z"/>
+        <circle cx="9.2" cy="11.2" r="1.3" fill="currentColor" stroke="none"/>
+        <circle cx="14.8" cy="11.2" r="1.3" fill="currentColor" stroke="none"/>
+        <path d="M10.8 15.6c.4.4.8.6 1.2.6s.8-.2 1.2-.6"/>
+      </g>
+    </symbol>
+    <symbol id="i-users" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="9" cy="8" r="3.2"/>
+        <path d="M2.6 19.4c0-3.4 2.9-5.9 6.4-5.9s6.4 2.5 6.4 5.9"/>
+        <path d="M16.4 5.5c1.6.4 2.7 1.8 2.7 3.4 0 1.5-.9 2.7-2.2 3.2"/>
+        <path d="M17.9 13.7c2.3.4 3.8 2.1 4 4.4"/>
+      </g>
+    </symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5.5v13M5.5 12h13"/></g>
+    </symbol>
+    <symbol id="i-link" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10.5 13.5a5 5 0 0 0 7.1 0l3-3a5 5 0 0 0-7.1-7.1l-1.2 1.2"/>
+        <path d="M13.5 10.5a5 5 0 0 0-7.1 0l-3 3a5 5 0 0 0 7.1 7.1l1.2-1.2"/>
+      </g>
+    </symbol>
+    <symbol id="i-info" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M12 11v5.2"/>
+        <circle cx="12" cy="7.8" r=".85" fill="currentColor" stroke="none"/>
+      </g>
+    </symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="8" y="8" width="12" height="12" rx="2.4"/>
+        <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>
+      </g>
+    </symbol>
+    <symbol id="i-share" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3.5v11.5"/>
+        <path d="m7.8 7.7 4.2-4.2 4.2 4.2"/>
+        <path d="M5 14v5.2a1.8 1.8 0 0 0 1.8 1.8h10.4a1.8 1.8 0 0 0 1.8-1.8V14"/>
+      </g>
+    </symbol>
+    <symbol id="i-exit" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8"/>
+        <path d="M18.5 12H10"/>
+        <path d="m15.5 8.5 3.5 3.5-3.5 3.5"/>
+      </g>
+    </symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4.5 7h15"/>
+        <path d="M9.5 7V5.2c0-.94.76-1.7 1.7-1.7h1.6c.94 0 1.7.76 1.7 1.7V7"/>
+        <path d="M6.5 7v11.3A2.7 2.7 0 0 0 9.2 21h5.6a2.7 2.7 0 0 0 2.7-2.7V7"/>
+        <path d="M10.2 11v6M13.8 11v6"/>
+      </g>
+    </symbol>
+    <symbol id="i-send" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21.3 3.3 10.8 13.8"/>
+        <path d="M21.3 3.3 14.9 20.6l-4.1-6.8L3.9 9.7 21.3 3.3Z"/>
+      </g>
+    </symbol>
+    <symbol id="i-close" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6 18 18M18 6 6 18"/></g>
+    </symbol>
+    <symbol id="i-back" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 12H5"/>
+        <path d="m12 5-7 7 7 7"/>
+      </g>
+    </symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m9 6 6 6-6 6"/>
+      </g>
+    </symbol>
+    <symbol id="i-more" viewBox="0 0 24 24">
+      <circle cx="12" cy="5.5" r="1.7" fill="currentColor"/>
+      <circle cx="12" cy="12" r="1.7" fill="currentColor"/>
+      <circle cx="12" cy="18.5" r="1.7" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-key" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="8" cy="15" r="4"/>
+        <path d="m11.2 11.8 8.8-8.8"/>
+        <path d="m17.2 5.8 1.8 1.8"/>
+        <path d="m14.4 8.6 1.8 1.8"/>
+      </g>
+    </symbol>
+    <symbol id="i-home" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3.5 10.5 12 3l8.5 7.5"/>
+        <path d="M5.6 9.5V21h12.8V9.5"/>
+        <path d="M10 21v-6h4v6"/>
+      </g>
+    </symbol>
+    <symbol id="i-search" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="7"/>
+        <path d="m20.5 20.5-4.3-4.3"/>
+      </g>
+    </symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10.3 3.9 2.6 17.4a2 2 0 0 0 1.7 3h15.4a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/>
+        <path d="M12 9.2v4"/>
+        <circle cx="12" cy="16.4" r=".85" fill="currentColor" stroke="none"/>
+      </g>
+    </symbol>
+    <symbol id="i-check" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5 10 18 19.5 7.5"/></g>
+    </symbol>
+    <symbol id="i-reply" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 7 4 12l5 5"/>
+        <path d="M4 12h11.5a4.5 4.5 0 0 1 4.5 4.5V19"/>
+      </g>
+    </symbol>
+    <symbol id="i-save" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 3h11l4 4v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/>
+        <path d="M8 3v6h7V3"/>
+        <rect x="7.5" y="13" width="9" height="7" rx="1"/>
+      </g>
+    </symbol>
+    <symbol id="i-spinner" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+        <path d="M12 3a9 9 0 0 1 9 9"/>
+        <path d="M21 12a9 9 0 0 1-9 9" opacity=".6"/>
+        <path d="M12 21a9 9 0 0 1-9-9" opacity=".35"/>
+        <path d="M3 12a9 9 0 0 1 9-9" opacity=".15"/>
+      </g>
+    </symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="4.5" y="10.5" width="15" height="10" rx="2.2"/>
+        <path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/>
+        <circle cx="12" cy="15.5" r="1.3" fill="currentColor" stroke="none"/>
+      </g>
+    </symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2.5 4.5 5.5v6c0 4.6 3.2 8.7 7.5 10 4.3-1.3 7.5-5.4 7.5-10v-6L12 2.5Z"/>
+        <path d="m9 12 2.2 2.2L15.5 10"/>
+      </g>
+    </symbol>
+    <symbol id="i-eye-off" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 3l18 18"/>
+        <path d="M10.6 6.2c.5-.1.9-.1 1.4-.1 4.4 0 7.7 3 9 5.9-.5 1.1-1.3 2.2-2.3 3.1"/>
+        <path d="M6.3 7.3C4.4 8.6 3.1 10.3 2.5 12c1.3 2.9 4.6 5.9 9 5.9 1.4 0 2.7-.3 3.8-.8"/>
+        <path d="M9.4 10c.4-1.3 1.4-2.2 2.6-2.2 1.6 0 2.9 1.3 2.9 2.9 0 1-.5 1.9-1.3 2.5"/>
+      </g>
+    </symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 12a8 8 0 0 1 13.6-5.7L20.5 8"/>
+        <path d="M20.5 4.5V8h-3.5"/>
+        <path d="M20 12a8 8 0 0 1-13.6 5.7L3.5 16"/>
+        <path d="M3.5 19.5V16h3.5"/>
+      </g>
+    </symbol>
+    <symbol id="i-r-heart" viewBox="0 0 24 24">
+      <path d="M12 20.5c-1-.8-8-5.9-8-11.2A4.8 4.8 0 0 1 8.8 4.5 4.5 4.5 0 0 1 12 6.3a4.5 4.5 0 0 1 3.2-1.8 4.8 4.8 0 0 1 4.8 4.8c0 5.3-7 10.4-8 11.2Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-r-thumb" viewBox="0 0 24 24">
+      <path d="M7 10.5v9.5h10.4a2 2 0 0 0 1.95-1.55l1.4-6A2 2 0 0 0 18.8 10H14l.9-4a2.2 2.2 0 0 0-2.15-2.7 1.5 1.5 0 0 0-1.35.8L7 10.5Z" fill="currentColor"/>
+      <rect x="2.5" y="10.5" width="3.5" height="9.5" rx="1" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-r-fire" viewBox="0 0 24 24">
+      <path d="M12 2.5c1 3 4 4.5 4 8.5 0 1.2-.4 2-1 2.6.3-2-.5-4-2-5.2.3 2.4-1.7 3.4-1.7 5.6 0 .8.3 1.4.8 1.9-2 0-3.6-1.7-3.6-3.9 0-3 2-5.5 3.5-9.5Zm4.2 10.9c.4-.6.6-1.4.6-2.2.9 1.1 1.5 2.4 1.5 3.9a6.3 6.3 0 0 1-6.3 6.3A6 6 0 0 1 6 15.4c0-1.4.5-2.7 1.3-3.7 0 1.2.4 2.2 1.2 2.9a2.4 2.4 0 0 1 4.2-1.6c.4-.4.7-.9.9-1.4.9.2 1.6.8 2 1.5Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-r-laugh" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="m6.6 10.2 1.9-1.9 1.9 1.9"/>
+        <path d="m13.6 10.2 1.9-1.9 1.9 1.9"/>
+        <path d="M8 14.6c1 1.2 2.4 1.9 4 1.9s3-.7 4-1.9"/>
+      </g>
+    </symbol>
+    <symbol id="i-r-wow" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"/>
+        <circle cx="9" cy="10" r=".95" fill="currentColor" stroke="none"/>
+        <circle cx="15" cy="10" r=".95" fill="currentColor" stroke="none"/>
+        <circle cx="12" cy="15.5" r="2"/>
+      </g>
+    </symbol>
+    <symbol id="i-r-sad" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"/>
+        <circle cx="9" cy="10" r=".95" fill="currentColor" stroke="none"/>
+        <circle cx="15" cy="10" r=".95" fill="currentColor" stroke="none"/>
+        <path d="M9 17.2c.9-1.3 2-1.9 3-1.9s2.1.6 3 1.9"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
 
-<main id="app" class="app">
+<a class="skip-link" href="#main-content">Aller au contenu</a>
 
-  <!-- =====================================================
-       ACCUEIL
-  ====================================================== -->
+<div class="ambient" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="spotlight" id="spotlight" aria-hidden="true"></div>
 
-  <section
-    id="home-screen"
-    class="screen home-screen"
-  >
-
+<main id="main-content" class="app">
+  <!-- ═══ ACCUEIL ═══ -->
+  <section id="home-screen" class="screen home-screen active" aria-labelledby="home-heading">
     <header class="app-header">
-
       <div class="brand">
-
-        <div class="logo" aria-hidden="true">
-          👻
-        </div>
-
+        <div class="logo" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><use href="#i-ghost"/></svg></div>
         <div class="brand-text">
-
-          <p class="welcome">
-            Bienvenue sur
-          </p>
-
-          <h1>
-            AnonyBoX
-          </h1>
-
+          <p class="welcome">Bienvenue sur</p>
+          <h1 id="home-heading">AnonyBoX</h1>
         </div>
-
       </div>
-
-      <button
-        id="profile-button"
-        class="profile-button"
-        type="button"
-        aria-label="Ouvrir le profil"
-      >
-        👤
+      <button id="profile-button" class="profile-button" type="button" aria-label="Ouvrir le profil" data-mask="#----">
+        <svg class="ic" viewBox="0 0 24 24"><use href="#i-user"/></svg>
       </button>
-
     </header>
 
+    <div class="privacy-banner" role="status">
+      <div class="privacy-banner__icon" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><use href="#i-shield"/></svg></div>
+      <div class="privacy-banner__body">
+        <strong>Session anonyme active</strong>
+        <span>Aucun identifiant persistant · Historique local uniquement</span>
+      </div>
+      <span class="privacy-banner__mask" id="home-mask">#----</span>
+    </div>
 
-    <!-- HERO -->
-
-    <section
-      class="hero"
-      aria-label="Présentation d'AnonyBoX"
-    >
-
+    <section class="hero" aria-label="Présentation">
       <div class="hero-glow" aria-hidden="true"></div>
-
-      <div class="hero-icon" aria-hidden="true">
-        👻
-      </div>
-
-      <p class="hero-label">
-        ESPACE ANONYME
-      </p>
-
-      <h2>
-        Parle librement.
-        <br>
-        <span>Reste anonyme.</span>
-      </h2>
-
-      <p class="hero-description">
-        Crée ou rejoins un groupe et commence à discuter.
-      </p>
-
+      <div class="hero-icon" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><use href="#i-mask"/></svg></div>
+      <p class="hero-label">Espace anonyme</p>
+      <h2>Parle librement.<br><span>Reste anonyme.</span></h2>
+      <p class="hero-description">Crée ou rejoins un groupe et commence à discuter en toute confidentialité.</p>
     </section>
 
-
-    <!-- ACTIONS -->
-
-    <section
-      class="actions"
-      aria-label="Actions principales"
-    >
-
-      <button
-        id="create-group-button"
-        class="main-action"
-        type="button"
-        data-create-group
-      >
-
-        <span class="action-icon" aria-hidden="true">
-          ➕
-        </span>
-
-        <span class="action-text">
-
-          <strong>
-            Créer un groupe
-          </strong>
-
-          <small>
-            Crée ton propre espace
-          </small>
-
-        </span>
-
-        <span class="arrow" aria-hidden="true">
-          ›
-        </span>
-
+    <section class="actions" aria-label="Actions principales">
+      <button id="create-group-button" class="action main-action" type="button" data-create-group>
+        <span class="action-icon" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><use href="#i-plus"/></svg></span>
+        <span class="action-text"><strong>Créer un groupe</strong><small>Crée ton propre espace</small></span>
+        <span class="action-arrow" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><use href="#i-chevron"/></svg></span>
       </button>
-
-
-      <button
-        id="join-button"
-        class="secondary-action"
-        type="button"
-        data-join-group
-      >
-
-        <span class="action-icon" aria-hidden="true">
-          🔗
-        </span>
-
-        <span class="action-text">
-
-          <strong>
-            Rejoindre un groupe
-          </strong>
-
-          <small>
-            Entre avec un code
-          </small>
-
-        </span>
-
-        <span class="arrow" aria-hidden="true">
-          ›
-        </span>
-
+      <button id="join-button" class="action secondary-action" type="button" data-join-group>
+        <span class="action-icon" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><use href="#i-link"/></svg></span>
+        <span class="action-text"><strong>Rejoindre un groupe</strong><small>Entre avec un code</small></span>
+        <span class="action-arrow" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><use href="#i-chevron"/></svg></span>
       </button>
-
     </section>
 
-
-    <!-- GROUPES RÉCENTS -->
-
-    <section
-      class="home-groups-preview"
-      aria-labelledby="home-groups-title"
-    >
-
-      <div class="section-title">
-
+    <section class="home-groups-preview" aria-labelledby="home-groups-title">
+      <header class="section-head">
         <div>
-
-          <p>
-            TES DISCUSSIONS
-          </p>
-
-          <h2 id="home-groups-title">
-            Groupes récents
-          </h2>
-
+          <p class="section-head__label">Tes discussions</p>
+          <h2 id="home-groups-title" class="section-head__title">Groupes récents</h2>
         </div>
-
-        <button
-          id="see-groups-button"
-          class="see-groups-button"
-          type="button"
-        >
+        <button id="see-groups-button" class="section-head__action" type="button">
           Voir tout
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-chevron"/></svg>
         </button>
-
-      </div>
-
-
-      <div
-        id="home-groups-list"
-        class="home-groups-list"
-      >
-
-        <div
-          id="home-empty-groups"
-          class="empty-groups"
-        >
-
-          <div class="empty-icon" aria-hidden="true">
-            👻
-          </div>
-
-          <h3>
-            Aucun groupe
-          </h3>
-
-          <p>
-            Tes discussions apparaîtront ici.
-          </p>
-
+      </header>
+      <div id="home-groups-list" class="home-groups-list" role="list">
+        <div id="home-empty-groups" class="empty-groups">
+          <div class="empty-icon" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><use href="#i-ghost"/></svg></div>
+          <h3>Aucun groupe</h3>
+          <p>Tes discussions apparaîtront ici.</p>
         </div>
-
       </div>
-
     </section>
-
   </section>
 
-
-  <!-- =====================================================
-       GROUPES
-  ====================================================== -->
-
-  <section
-    id="groups-screen"
-    class="screen groups-screen"
-  >
-
+  <!-- ═══ GROUPES ═══ -->
+  <section id="groups-screen" class="screen groups-screen" aria-labelledby="groups-heading">
     <header class="page-header">
-
       <div>
-
-        <p class="page-label">
-          ESPACE PRIVÉ
-        </p>
-
-        <h2>
-          Mes groupes
-        </h2>
-
+        <p class="page-label">Espace privé</p>
+        <h2 id="groups-heading">Mes groupes</h2>
       </div>
-
-      <button
-        id="new-group-button"
-        class="header-action"
-        type="button"
-        aria-label="Créer un groupe"
-        data-create-group
-      >
-        ➕
+      <button id="new-group-button" class="header-action" type="button" aria-label="Créer un groupe" data-create-group>
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-plus"/></svg>
       </button>
-
     </header>
 
+    <div class="search">
+      <span class="search__icon" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><use href="#i-search"/></svg></span>
+      <input id="group-search" class="search__input" type="search" placeholder="Rechercher un groupe..." autocomplete="off" aria-label="Rechercher un groupe">
+    </div>
 
-    <div class="search-box">
+    <div id="groups-list" class="groups" role="list">
+      <div id="empty-groups" class="empty-groups">
+        <div class="empty-icon" aria-hidden="true"><svg class="ic ic--neutral" viewBox="0 0 24 24"><use href="#i-users"/></svg></div>
+        <h3>Aucun groupe</h3>
+        <p>Tes groupes apparaîtront ici.</p>
+        <small>Crée un groupe ou rejoins-en un avec un code.</small>
+      </div>
+    </div>
+  </section>
 
-      <span aria-hidden="true">
-        🔎
+  <!-- ═══ CHAT ═══ -->
+  <section id="chat-screen" class="screen chat-page" aria-hidden="true" aria-label="Discussion">
+    <header class="chat-topbar">
+      <button id="chat-back-button" class="chat-back-button" type="button" aria-label="Retour" data-home>
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-back"/></svg>
+      </button>
+
+      <button id="chat-group-button" class="chat-group-button" type="button" aria-label="Informations du groupe">
+        <span id="chat-avatar" class="chat-avatar" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><use href="#i-ghost"/></svg></span>
+        <span class="chat-group-info">
+          <span id="chat-title" class="chat-title" data-group-name>Discussion</span>
+          <span id="chat-status" class="chat-status">
+            <span class="presence-dot" aria-hidden="true"></span>
+            <span id="chat-status-text">Groupe privé</span>
+          </span>
+        </span>
+      </button>
+
+      <span class="crypto-chip" title="Chiffré côté appareil" aria-label="Chiffré">
+        <svg class="ic" viewBox="0 0 24 24"><use href="#i-lock"/></svg>
+        Chiffré
       </span>
 
-      <input
-        id="group-search"
-        type="search"
-        placeholder="Rechercher un groupe..."
-        autocomplete="off"
-        aria-label="Rechercher un groupe"
-      >
-
-    </div>
-
-
-    <div
-      id="groups-list"
-      class="groups"
-    >
-
-      <div
-        id="empty-groups"
-        class="empty-groups"
-      >
-
-        <div class="empty-icon" aria-hidden="true">
-          👥
-        </div>
-
-        <h3>
-          Aucun groupe
-        </h3>
-
-        <p>
-          Tes groupes apparaîtront ici.
-        </p>
-
-        <small>
-          Crée un groupe ou rejoins-en un avec un code.
-        </small>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- =====================================================
-       DISCUSSION
-  ====================================================== -->
-
-  <section
-    id="chat-screen"
-    class="screen chat-page"
-    aria-hidden="true"
-  >
-
-    <header class="chat-topbar">
-
-      <button
-        id="chat-back-button"
-        class="chat-back-button"
-        type="button"
-        aria-label="Retour aux groupes"
-        data-home
-      >
-        ←
+      <button id="chat-menu-button" class="chat-menu-button" type="button" aria-label="Menu" aria-haspopup="menu" aria-controls="chat-menu" aria-expanded="false">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-more"/></svg>
       </button>
-
-
-      <button
-        id="chat-group-button"
-        class="chat-group-button"
-        type="button"
-        aria-label="Informations du groupe"
-      >
-
-        <span
-          id="chat-avatar"
-          class="chat-avatar"
-          aria-hidden="true"
-        >
-          👻
-        </span>
-
-        <span class="chat-group-info">
-
-          <span
-            id="chat-title"
-            class="chat-title"
-            data-group-name
-          >
-            Discussion
-          </span>
-
-          <span
-            id="chat-status"
-            class="chat-status"
-          >
-            Groupe privé
-          </span>
-
-        </span>
-
-      </button>
-
-
-      <button
-        id="chat-menu-button"
-        class="chat-menu-button"
-        type="button"
-        aria-label="Ouvrir le menu"
-        aria-haspopup="menu"
-        aria-controls="chat-menu"
-        aria-expanded="false"
-      >
-        ⋮
-      </button>
-
     </header>
 
-
-    <!-- MENU -->
-
-    <div
-      id="chat-menu"
-      class="chat-menu"
-      role="menu"
-      style="display:none;"
-    >
-
-      <button
-        id="menu-group-info"
-        type="button"
-        role="menuitem"
-      >
-        <span aria-hidden="true">ℹ️</span>
-        <span>Informations du groupe</span>
+    <div id="chat-menu" class="chat-menu" role="menu" style="display:none;">
+      <button id="menu-group-info" type="button" role="menuitem">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-info"/></svg><span>Informations du groupe</span>
       </button>
-
-
-      <button
-        id="menu-copy-code"
-        type="button"
-        role="menuitem"
-        data-copy-code
-      >
-        <span aria-hidden="true">📋</span>
-        <span>Copier le code</span>
+      <button id="menu-toggle-blur" type="button" role="menuitem">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-eye-off"/></svg><span id="menu-toggle-blur-label">Brouiller les noms</span>
       </button>
-
-
-      <button
-        id="menu-leave-group"
-        type="button"
-        role="menuitem"
-        data-leave-group
-      >
-        <span aria-hidden="true">🚪</span>
-        <span>Quitter le groupe</span>
+      <button id="menu-copy-code" type="button" role="menuitem" data-copy-code>
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-copy"/></svg><span>Copier le code</span>
       </button>
-
-
-      <button
-        id="menu-delete-group"
-        type="button"
-        role="menuitem"
-        style="display:none;"
-        data-delete-group
-      >
-        <span aria-hidden="true">🗑️</span>
-        <span>Supprimer le groupe</span>
+      <button id="menu-share-code" type="button" role="menuitem" data-share-code>
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-share"/></svg><span>Partager le code</span>
       </button>
-
+      <button id="menu-leave-group" type="button" role="menuitem" data-leave-group>
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-exit"/></svg><span>Quitter le groupe</span>
+      </button>
+      <button id="menu-delete-group" type="button" role="menuitem" style="display:none;" data-delete-group>
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-trash"/></svg><span>Supprimer le groupe</span>
+      </button>
     </div>
 
-
-    <!-- INFORMATIONS DU GROUPE -->
-
-    <div
-      id="group-info-panel"
-      class="group-info-panel"
-      style="display:none;"
-    >
-
-      <div class="group-info-header">
-
-        <button
-          id="group-info-close"
-          type="button"
-          aria-label="Fermer"
-        >
-          ✕
+    <div id="group-info-panel" class="group-info-panel" style="display:none;" role="dialog" aria-label="Informations du groupe">
+      <header class="group-info-header">
+        <button id="group-info-close" type="button" aria-label="Fermer">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-close"/></svg>
         </button>
-
-        <h2>
-          Informations
-        </h2>
-
-      </div>
-
-
+        <h2>Informations</h2>
+      </header>
       <div class="group-info-content">
-
-        <div
-          id="info-group-avatar"
-          class="large-group-avatar"
-          aria-hidden="true"
-        >
-          👻
+        <div id="info-group-avatar" class="large-group-avatar" aria-hidden="true">
+          <svg class="ic" viewBox="0 0 24 24"><use href="#i-ghost"/></svg>
         </div>
-
-        <h3
-          id="info-group-name"
-          data-group-name
-        >
-          Groupe
-        </h3>
-
-        <p>
-          Groupe privé et anonyme
-        </p>
-
+        <h3 id="info-group-name" data-group-name>Groupe</h3>
+        <p>Groupe privé et anonyme</p>
 
         <div class="info-row">
-
-          <span>
-            🔑 Code
-          </span>
-
-          <strong
-            id="info-group-code"
-            data-group-code
-          >
-            --------
-          </strong>
-
+          <span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-key"/></svg>Code</span>
+          <strong id="info-group-code" data-group-code>--------</strong>
         </div>
-
-
         <div class="info-row">
-
-          <span>
-            👥 Membres
-          </span>
-
-          <strong
-            id="info-member-count"
-            data-members-count
-          >
-            0
-          </strong>
-
+          <span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-users"/></svg>Membres</span>
+          <strong id="info-member-count" data-members-count>0</strong>
+        </div>
+        <div class="info-row">
+          <span><span class="info-online-dot" aria-hidden="true"></span>En ligne</span>
+          <strong id="info-online-count" data-online-count>0</strong>
         </div>
 
+        <button class="share-btn" type="button" data-share-code>
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-share"/></svg>
+          Partager l'invitation
+        </button>
       </div>
-
     </div>
 
-
-    <!-- MESSAGES -->
-
-    <div
-      id="messages"
-      class="messages"
-      role="log"
-      aria-live="polite"
-      aria-label="Messages de la discussion"
-    >
-
-      <div
-        id="chat-welcome"
-        class="chat-welcome"
-      >
-
-        <div aria-hidden="true">
-          👻
-        </div>
-
-        <h3>
-          Bienvenue dans le groupe
-        </h3>
-
-        <p>
-          Les messages de cette discussion apparaîtront ici.
-        </p>
-
+    <div id="messages" class="messages" role="log" aria-live="polite" aria-label="Messages">
+      <div id="chat-welcome" class="chat-welcome">
+        <div aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><use href="#i-ghost"/></svg></div>
+        <h3>Bienvenue dans le groupe</h3>
+        <p>Les messages de cette discussion apparaîtront ici.</p>
       </div>
-
     </div>
-
-
-    <!-- ÉCRITURE -->
 
     <footer class="message-area">
-
-      <div class="message-box">
-
-        <input
-          type="text"
-          id="message-input"
-          placeholder="Écrire un message..."
-          autocomplete="off"
-          maxlength="1000"
-          aria-label="Écrire un message"
-        >
-
-        <button
-          id="send-message-button"
-          type="button"
-          aria-label="Envoyer le message"
-        >
-          ➤
+      <div id="reply-preview" class="reply-preview" style="display:none;">
+        <div class="reply-preview__body">
+          <strong id="reply-preview-name">Réponse</strong>
+          <span id="reply-preview-text"></span>
+        </div>
+        <button class="reply-preview__close" type="button" id="reply-preview-close" aria-label="Annuler">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-close"/></svg>
         </button>
-
       </div>
-
+      <div class="message-box" id="message-box">
+        <input type="text" id="message-input" placeholder="Écrire un message..."
+               autocomplete="off" autocorrect="off" autocapitalize="sentences"
+               spellcheck="false" enterkeyhint="send" inputmode="text"
+               maxlength="1000" aria-label="Écrire un message">
+        <button id="send-message-button" type="button" aria-label="Envoyer">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-send"/></svg>
+        </button>
+      </div>
     </footer>
-
   </section>
 
-
-  <!-- =====================================================
-       PROFIL
-  ====================================================== -->
-
-  <section
-    id="profile-screen"
-    class="screen profile-screen"
-  >
-
+  <!-- ═══ PROFIL ═══ -->
+  <section id="profile-screen" class="screen profile-screen" aria-labelledby="profile-heading">
     <header class="page-header">
-
       <div>
-
-        <p class="page-label">
-          COMPTE
-        </p>
-
-        <h2>
-          Mon profil
-        </h2>
-
+        <p class="page-label">Compte</p>
+        <h2 id="profile-heading">Mon profil</h2>
       </div>
-
     </header>
-
-
     <div class="profile-card">
-
-      <div class="profile-icon" aria-hidden="true">
-        👤
-      </div>
-
-      <h3>
-        Identité anonyme
-      </h3>
-
-      <p>
-        Ton pseudo est visible dans tes groupes.
-      </p>
-
-
-      <label
-        for="profile-name"
-        class="input-label"
-      >
-        Ton pseudo
-      </label>
-
-
-      <input
-        type="text"
-        id="profile-name"
-        placeholder="Choisis ton pseudo"
-        maxlength="30"
-        autocomplete="off"
-      >
-
-
-      <button
-        id="save-profile"
-        type="button"
-      >
-        💾 Enregistrer
+      <div class="profile-icon" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><use href="#i-mask"/></svg></div>
+      <h3>Identité anonyme</h3>
+      <p>Ton pseudo est visible dans tes groupes.</p>
+      <label for="profile-name" class="input-label">Ton pseudo</label>
+      <input type="text" id="profile-name" placeholder="Choisis ton pseudo" maxlength="30" autocomplete="off">
+      <button id="save-profile" type="button">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-save"/></svg>
+        Enregistrer
       </button>
-
     </div>
 
+    <div class="session-card">
+      <div class="session-card__head">
+        <div class="session-card__icon" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><use href="#i-shield"/></svg></div>
+        <div>
+          <strong>Session anonyme</strong>
+          <small>Réinitialisée à la fermeture de l'onglet</small>
+        </div>
+      </div>
+      <div class="session-card__row">
+        <span class="k"><svg class="ic" viewBox="0 0 24 24"><use href="#i-mask"/></svg>Identifiant de session</span>
+        <span class="v" id="session-mask">#----</span>
+      </div>
+      <div class="session-card__row">
+        <span class="k"><svg class="ic" viewBox="0 0 24 24"><use href="#i-spinner"/></svg>Durée</span>
+        <span class="v" id="session-duration">0 min</span>
+      </div>
+      <div class="session-card__row">
+        <span class="k"><svg class="ic" viewBox="0 0 24 24"><use href="#i-lock"/></svg>Chiffrement</span>
+        <span class="v badge">Actif</span>
+      </div>
+      <div class="session-card__row">
+        <span class="k"><svg class="ic" viewBox="0 0 24 24"><use href="#i-users"/></svg>Groupes suivis</span>
+        <span class="v" id="session-groups">0</span>
+      </div>
+      <div class="session-actions">
+        <button class="session-btn" type="button" id="btn-toggle-blur">
+          <svg class="ic" viewBox="0 0 24 24"><use href="#i-eye-off"/></svg>
+          Brouiller
+        </button>
+        <button class="session-btn session-btn--danger" type="button" id="btn-new-identity">
+          <svg class="ic" viewBox="0 0 24 24"><use href="#i-refresh"/></svg>
+          Nouvelle identité
+        </button>
+      </div>
+    </div>
   </section>
-
 </main>
 
-
-<!-- =====================================================
-     CONFIRMATION
-====================================================== -->
-
-<div
-  id="confirm-overlay"
-  class="confirm-overlay"
-  style="display:none;"
-  role="dialog"
-  aria-modal="true"
-  aria-labelledby="confirm-title"
-  aria-describedby="confirm-message"
->
-
+<!-- CONFIRM -->
+<div id="confirm-overlay" class="confirm-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-message">
   <div class="confirm-box">
-
-    <div
-      id="confirm-icon"
-      class="confirm-icon"
-      aria-hidden="true"
-    >
-      ⚠️
-    </div>
-
-    <h3 id="confirm-title">
-      Confirmation
-    </h3>
-
-    <p id="confirm-message">
-      Es-tu sûr de vouloir continuer ?
-    </p>
-
+    <div id="confirm-icon" class="confirm-icon" aria-hidden="true"></div>
+    <h3 id="confirm-title">Confirmation</h3>
+    <p id="confirm-message">Es-tu sûr ?</p>
     <div class="confirm-buttons">
-
-      <button
-        id="confirm-cancel"
-        class="confirm-cancel"
-        type="button"
-      >
-        Annuler
-      </button>
-
-      <button
-        id="confirm-ok"
-        class="confirm-ok"
-        type="button"
-      >
-        OK
-      </button>
-
+      <button id="confirm-cancel" class="confirm-cancel" type="button">Annuler</button>
+      <button id="confirm-ok" class="confirm-ok" type="button">OK</button>
     </div>
-
   </div>
-
 </div>
 
-
-<!-- =====================================================
-     NOTIFICATION
-====================================================== -->
-
-<div
-  id="toast"
-  class="toast"
-  role="status"
-  aria-live="polite"
-  style="display:none;"
->
-
-  <span id="toast-icon" aria-hidden="true">
-    ✓
-  </span>
-
-  <span id="toast-message">
-    Terminé
-  </span>
-
+<!-- TOAST -->
+<div id="toast" class="toast" role="status" aria-live="polite" style="display:none;">
+  <span id="toast-icon" aria-hidden="true"></span>
+  <span id="toast-message">Terminé</span>
 </div>
 
-
-<!-- =====================================================
-     NAVIGATION BASSE
-====================================================== -->
-
-<nav
-  class="bottom-nav"
-  aria-label="Navigation principale"
->
-
-  <button
-    id="home-nav"
-    class="nav-active"
-    type="button"
-    aria-current="page"
-    data-home
-  >
-
-    <span aria-hidden="true">
-      🏠
-    </span>
-
-    <small>
-      Accueil
-    </small>
-
+<!-- NAV -->
+<nav class="bottom-nav" aria-label="Navigation principale">
+  <button id="home-nav" class="nav-active" type="button" aria-current="page" data-home>
+    <span aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><use href="#i-home"/></svg></span>
+    <small>Accueil</small>
   </button>
-
-
-  <button
-    id="groups-nav"
-    type="button"
-  >
-
-    <span aria-hidden="true">
-      👥
-    </span>
-
-    <small>
-      Groupes
-    </small>
-
+  <button id="groups-nav" type="button">
+    <span aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><use href="#i-users"/></svg></span>
+    <small>Groupes</small>
   </button>
-
-
-  <button
-    id="profile-nav"
-    type="button"
-  >
-
-    <span aria-hidden="true">
-      👤
-    </span>
-
-    <small>
-      Profil
-    </small>
-
+  <button id="profile-nav" type="button">
+    <span aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><use href="#i-mask"/></svg></span>
+    <small>Profil</small>
   </button>
-
 </nav>
 
+<script type="module">
+/* ============================================================
+   ANONYBOX — MODULE
+   ============================================================ */
 
-<!-- =====================================================
-     JAVASCRIPT
-====================================================== -->
+import { initializeApp }
+  from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged }
+  from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+import { getDatabase, ref, set, get, remove, push, onValue, onDisconnect }
+  from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
 
-<script
-  type="module"
-  src="script.js?v=2026"
-></script>
+const firebaseConfig = {
+  apiKey: "AIzaSyAGrCghSoJf7ULhi1Zi1RqeYmt4bE63a3M",
+  authDomain: "prjt-78fef.firebaseapp.com",
+  databaseURL: "https://prjt-78fef-default-rtdb.firebaseio.com",
+  projectId: "prjt-78fef",
+  storageBucket: "prjt-78fef.firebasestorage.app",
+  messagingSenderId: "502581952099",
+  appId: "1:502581952099:web:2ae7c0912d073f3b11c256"
+};
 
+const REACTIONS = [
+  { key:"❤️", icon:"i-r-heart", label:"Coeur" },
+  { key:"👍", icon:"i-r-thumb", label:"Pouce levé" },
+  { key:"😂", icon:"i-r-laugh", label:"Rire" },
+  { key:"🔥", icon:"i-r-fire",  label:"Feu" },
+  { key:"😮", icon:"i-r-wow",   label:"Surprise" },
+  { key:"😢", icon:"i-r-sad",   label:"Triste" }
+];
+const REACTION_ICON = Object.fromEntries(REACTIONS.map(r => [r.key, r.icon]));
+
+function icon(id, cls="ic") { return `<svg class="${cls}" viewBox="0 0 24 24" aria-hidden="true"><use href="#${id}"/></svg>`; }
+
+/* ─── ÉTAT ─── */
+let app=null,auth=null,db=null;
+let firebaseAvailable=false,firebaseAuthReady=false,firebaseAuthError=null;
+let currentUser=null,currentGroupCode=null,currentGroupName=null;
+let messagesUnsubscribe=null,groupsUnsubscribe=null;
+let typingUnsubscribe=null,presenceUnsubscribe=null,reactionsUnsubscribe=null;
+let authReadyResolve=null;
+const authReadyPromise=new Promise(r=>authReadyResolve=r);
+
+let replyTarget=null;
+let typingTimer=null;
+let currentMessages=[];
+let currentReactions={};
+let currentPresence={};
+
+/* ─── SESSION ANONYME ─── */
+const SESSION_KEY = "anonybox_session_mask";
+const SESSION_START_KEY = "anonybox_session_start";
+let sessionMask = null;
+let sessionStart = null;
+
+function generateSessionMask() {
+  const hex = "0123456789ABCDEF";
+  let s = "";
+  for (let i = 0; i < 4; i++) s += hex[Math.floor(Math.random() * 16)];
+  return "#" + s;
+}
+
+function initSession() {
+  sessionMask = sessionStorage.getItem(SESSION_KEY);
+  if (!sessionMask) {
+    sessionMask = generateSessionMask();
+    sessionStorage.setItem(SESSION_KEY, sessionMask);
+    sessionStorage.setItem(SESSION_START_KEY, String(Date.now()));
+  }
+  sessionStart = parseInt(sessionStorage.getItem(SESSION_START_KEY) || String(Date.now()), 10);
+}
+
+function paintSessionMask() {
+  const profileBtn = $("profile-button");
+  if (profileBtn) profileBtn.dataset.mask = sessionMask;
+
+  const homeMask = $("home-mask");
+  if (homeMask) homeMask.textContent = sessionMask;
+
+  const sessMask = $("session-mask");
+  if (sessMask) sessMask.textContent = sessionMask;
+}
+
+function updateSessionDuration() {
+  const el = $("session-duration");
+  if (!el || !sessionStart) return;
+  const mins = Math.floor((Date.now() - sessionStart) / 60000);
+  if (mins < 1) el.textContent = "< 1 min";
+  else if (mins < 60) el.textContent = `${mins} min`;
+  else {
+    const h = Math.floor(mins / 60), m = mins % 60;
+    el.textContent = `${h} h ${String(m).padStart(2,"0")}`;
+  }
+}
+
+function updateSessionGroupsCount() {
+  const el = $("session-groups");
+  if (el) el.textContent = String(getSavedGroups().length);
+}
+
+try {
+  app=initializeApp(firebaseConfig);
+  auth=getAuth(app);
+  db=getDatabase(app);
+  firebaseAvailable=true;
+  console.log("Firebase initialisé.");
+} catch(e){ console.error("Init Firebase :",e); firebaseAvailable=false; }
+
+const $=id=>document.getElementById(id);
+const escapeHTML=t=>t==null?"":String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+
+function formatMessage(text){
+  const escaped=escapeHTML(text||"");
+  return escaped
+    .replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>')
+    .replace(/\n/g,"<br>");
+}
+function formatTime(t){ if(!t) return ""; return new Date(t).toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"}); }
+function formatDateLabel(ts){
+  const d=new Date(ts), now=new Date();
+  const today=new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime();
+  const yest=today-86400000;
+  const day=new Date(d.getFullYear(),d.getMonth(),d.getDate()).getTime();
+  if(day===today) return "Aujourd'hui";
+  if(day===yest)  return "Hier";
+  return d.toLocaleDateString("fr-FR",{day:"numeric",month:"long",year:d.getFullYear()!==now.getFullYear()?"numeric":undefined});
+}
+function getDayKey(ts){ const d=new Date(ts); return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`; }
+
+function createLocalUser(){
+  let uid=localStorage.getItem("anonybox_local_uid");
+  if(!uid){ uid="local_"+Date.now()+"_"+Math.random().toString(36).substring(2,10); localStorage.setItem("anonybox_local_uid",uid); }
+  return { uid, isLocal:true };
+}
+function haptic(ms=8){ try{ if(navigator.vibrate) navigator.vibrate(ms); }catch{} }
+
+let audioCtx=null;
+function playPing(){
+  try{
+    if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+    if(audioCtx.state==="suspended") audioCtx.resume();
+    const o=audioCtx.createOscillator(), g=audioCtx.createGain();
+    o.type="sine"; o.frequency.value=880;
+    g.gain.setValueAtTime(0.0001,audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.08,audioCtx.currentTime+0.01);
+    g.gain.exponentialRampToValueAtTime(0.0001,audioCtx.currentTime+0.18);
+    o.connect(g).connect(audioCtx.destination);
+    o.start(); o.stop(audioCtx.currentTime+0.2);
+  }catch{}
+}
+function getMyName(){ return localStorage.getItem("anonybox_username")||"Anonyme"; }
+
+/* ─── Toast ─── */
+let toastTimer=null;
+function showToast(message, symbolId="i-check", tone="success"){
+  const toastEl=$("toast"),iconEl=$("toast-icon"),msgEl=$("toast-message");
+  if(!toastEl) return console.log("[TOAST]",message);
+  iconEl.innerHTML=icon(symbolId, symbolId==="i-spinner"?"ic ic--spin":"ic");
+  iconEl.dataset.tone=tone;
+  msgEl.textContent=message;
+  toastEl.style.display="flex";
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>toastEl.style.display="none",3000);
+}
+
+/* ─── Confirm ─── */
+function askConfirm({title="Confirmation",message="Es-tu sûr ?",iconId="i-warn",tone="warn",okText="OK",cancelText="Annuler"}={}){
+  return new Promise(resolve=>{
+    const overlay=$("confirm-overlay");
+    if(!overlay){ resolve(window.confirm(message)); return; }
+    $("confirm-title").textContent=title;
+    $("confirm-message").textContent=message;
+    const iconWrap=$("confirm-icon");
+    iconWrap.innerHTML=icon(iconId);
+    iconWrap.dataset.tone=tone;
+    $("confirm-ok").textContent=okText;
+    $("confirm-cancel").textContent=cancelText;
+    overlay.style.display="grid";
+
+    function cleanup(r){
+      overlay.style.display="none";
+      $("confirm-ok").removeEventListener("click",onOk);
+      $("confirm-cancel").removeEventListener("click",onCancel);
+      overlay.removeEventListener("click",onBackdrop);
+      resolve(r);
+    }
+    function onOk(){cleanup(true)}
+    function onCancel(){cleanup(false)}
+    function onBackdrop(e){ if(e.target===overlay) cleanup(false) }
+    $("confirm-ok").addEventListener("click",onOk);
+    $("confirm-cancel").addEventListener("click",onCancel);
+    overlay.addEventListener("click",onBackdrop);
+  });
+}
+
+/* ─── Firebase Auth ─── */
+function fallbackToLocal(){
+  currentUser=createLocalUser();
+  window.anonyboxReady=true;
+  loadUnreadMessages(); renderSavedGroups(); loadProfile(); loadProfileName();
+}
+
+if(firebaseAvailable && auth){
+  onAuthStateChanged(auth,user=>{
+    if(user){
+      currentUser=user; firebaseAuthReady=true; firebaseAuthError=null;
+      window.anonyboxReady=true;
+      console.log("Firebase :",user.uid);
+      if(authReadyResolve){ authReadyResolve(user); authReadyResolve=null; }
+      loadUnreadMessages(); renderSavedGroups(); loadGroups(); loadProfile(); loadProfileName();
+    } else {
+      firebaseAuthReady=false;
+    }
+  });
+  signInAnonymously(auth)
+    .then(r=>console.log("Anonyme :",r.user.uid))
+    .catch(err=>{
+      firebaseAuthReady=false; firebaseAuthError=err;
+      console.error("Auth",err.code,err.message);
+      if(authReadyResolve){ authReadyResolve(null); authReadyResolve=null; }
+      fallbackToLocal();
+      showToast(firebaseReadableError(err),"i-warn","danger");
+    });
+} else {
+  if(authReadyResolve){ authReadyResolve(null); authReadyResolve=null; }
+  fallbackToLocal();
+}
+
+async function waitForFirebaseAuth(timeout=10000){
+  if(firebaseAuthReady && currentUser && !currentUser.isLocal) return true;
+  if(!firebaseAvailable||!auth) return false;
+  if(firebaseAuthError) return false;
+  const to=new Promise(r=>setTimeout(()=>r(false),timeout));
+  const result=await Promise.race([authReadyPromise,to]);
+  return Boolean(result && firebaseAuthReady && currentUser && !currentUser.isLocal);
+}
+
+/* ─── Navigation ─── */
+const SCREENS=["home-screen","groups-screen","chat-screen","profile-screen"];
+function hideAllScreens(){
+  SCREENS.forEach(id=>{ const el=$(id); if(el){ el.classList.remove("active","show"); el.setAttribute("aria-hidden","true"); } });
+}
+function showScreen(id){
+  closeMessageActions();
+  hideAllScreens();
+  const screen=$(id);
+  if(screen){ screen.classList.add("active","show"); screen.setAttribute("aria-hidden","false"); }
+  const map={"home-screen":"home-nav","groups-screen":"groups-nav","profile-screen":"profile-nav"};
+  document.querySelectorAll(".bottom-nav button").forEach(b=>{ b.classList.remove("nav-active"); b.removeAttribute("aria-current"); });
+  if(map[id]){
+    const btn=$(map[id]);
+    if(btn){ btn.classList.add("nav-active"); btn.setAttribute("aria-current","page"); }
+  }
+  document.body.classList.toggle("chat-open",id==="chat-screen");
+}
+
+function cleanupChatListeners(){
+  [typingUnsubscribe,presenceUnsubscribe,reactionsUnsubscribe].forEach(fn=>{ try{ fn&&fn(); }catch{} });
+  typingUnsubscribe=presenceUnsubscribe=reactionsUnsubscribe=null;
+  if(messagesUnsubscribe){ try{messagesUnsubscribe()}catch{} messagesUnsubscribe=null; }
+}
+function showHome(){
+  cleanupChatListeners();
+  currentGroupCode=null; currentGroupName=null;
+  toggleChatMenu(false); toggleGroupInfoPanel(false); clearReply();
+  showScreen("home-screen");
+}
+
+/* ─── Groups ─── */
+function getSavedGroups(){ try{ return JSON.parse(localStorage.getItem("anonybox_groups"))||[]; }catch{ return []; } }
+function saveGroups(g){ localStorage.setItem("anonybox_groups",JSON.stringify(g)); }
+function saveGroup(code,name="Groupe"){
+  code=String(code).toUpperCase();
+  const groups=getSavedGroups();
+  const ex=groups.find(g=>g.code===code);
+  if(ex) ex.name=name||ex.name;
+  else groups.unshift({code,name:name||"Groupe",joinedAt:Date.now()});
+  saveGroups(groups); renderSavedGroups();
+}
+function removeSavedGroup(code){
+  code=String(code).toUpperCase();
+  saveGroups(getSavedGroups().filter(g=>g.code!==code));
+  renderSavedGroups();
+}
+
+function groupCardHTML(g){
+  return `
+    <div class="group-card" data-code="${escapeHTML(g.code)}" role="listitem">
+      <div class="group-card-content" data-open-group="${escapeHTML(g.code)}" role="button" tabindex="0" aria-label="Ouvrir le groupe ${escapeHTML(g.name||"Groupe")}">
+        <div class="group-avatar" aria-hidden="true">${icon("i-ghost")}</div>
+        <div class="group-info">
+          <strong>${escapeHTML(g.name||"Groupe")}</strong>
+          <small>${escapeHTML(g.code)}</small>
+        </div>
+      </div>
+    </div>`;
+}
+
+function bindGroupCardActivation(el){
+  el.querySelectorAll("[data-open-group]").forEach(node=>{
+    const code=node.getAttribute("data-open-group");
+    node.addEventListener("click",()=>openSavedGroup(code));
+    node.addEventListener("keydown",e=>{
+      if(e.key==="Enter"||e.key===" "||e.key==="Spacebar"){
+        e.preventDefault();
+        openSavedGroup(code);
+      }
+    });
+  });
+}
+
+function renderSavedGroups(){
+  const groups=getSavedGroups();
+  const homeList=$("home-groups-list"), fullList=$("groups-list");
+  const emptyHTML=`<div class="empty-groups"><div class="empty-icon" aria-hidden="true">${icon("i-ghost")}</div><h3>Aucun groupe</h3><p>Tes discussions apparaîtront ici.</p></div>`;
+
+  if(!groups.length){
+    if(homeList) homeList.innerHTML=emptyHTML;
+    if(fullList) fullList.innerHTML=emptyHTML;
+    updateSessionGroupsCount();
+    return;
+  }
+
+  const html=groups.map(groupCardHTML).join("");
+  if(homeList) homeList.innerHTML=html;
+  if(fullList) fullList.innerHTML=html;
+
+  [homeList,fullList].forEach(list=>{
+    if(!list) return;
+    bindGroupCardActivation(list);
+  });
+  updateSessionGroupsCount();
+
+  // Réapplique un filtre de recherche actif, pour éviter qu'une mise à jour
+  // temps réel n'efface silencieusement les résultats filtrés affichés.
+  applyGroupsFilter();
+}
+
+function applyGroupsFilter(){
+  const search=$("group-search");
+  const list=$("groups-list");
+  if(!search||!list) return;
+  const q=search.value.trim().toLowerCase();
+  if(!q) return;
+  const all=getSavedGroups();
+  const filtered=all.filter(g=>(g.name||"").toLowerCase().includes(q)||(g.code||"").toLowerCase().includes(q));
+  if(!filtered.length){
+    list.innerHTML=`<div class="empty-groups"><div class="empty-icon" aria-hidden="true">${icon("i-search")}</div><h3>Aucun résultat</h3><p>Aucun groupe ne correspond.</p></div>`;
+    return;
+  }
+  list.innerHTML=filtered.map(groupCardHTML).join("");
+  bindGroupCardActivation(list);
+}
+
+async function openSavedGroup(code){
+  code=String(code).trim().toUpperCase();
+  const g=getSavedGroups().find(x=>x.code===code);
+  if(g) await openGroup(code,g.name);
+  else await joinGroup(code);
+}
+
+function generateGroupCode(){
+  const chars="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let c=""; for(let i=0;i<6;i++) c+=chars[Math.floor(Math.random()*chars.length)];
+  return c;
+}
+
+async function createGroup(){
+  const name=prompt("Nom du groupe :");
+  if(name===null) return;
+  const cleanName=name.trim()||"Groupe AnonyBoX";
+  showToast("Connexion à Firebase...","i-spinner","loading");
+  const ready=await waitForFirebaseAuth();
+  if(!ready){ showToast(getFirebaseErrorMessage(),"i-warn","danger"); return; }
+
+  let code=generateGroupCode();
+  try{
+    while((await get(ref(db,`groups/${code}`))).exists()) code=generateGroupCode();
+    await set(ref(db,`groups/${code}`),{
+      name:cleanName,createdAt:Date.now(),
+      owner:currentUser.uid,members:{[currentUser.uid]:true}
+    });
+    await set(ref(db,`groupCodes/${code}`),{code,name:cleanName,createdAt:Date.now()});
+    saveGroup(code,cleanName);
+    showToast("Groupe créé !");
+    await openGroup(code,cleanName);
+  }catch(err){
+    console.error("Création :",err);
+    showToast(firebaseReadableError(err),"i-warn","danger");
+  }
+}
+
+async function joinGroup(providedCode=null){
+  let code=providedCode;
+  if(!code) code=prompt("Entre le code du groupe :");
+  if(code===null) return;
+  code=String(code).trim().toUpperCase();
+  if(!code){ showToast("Entre un code de groupe.","i-warn","danger"); return; }
+  if(!/^[A-Z0-9]{4,12}$/.test(code)){ showToast("Code invalide.","i-warn","danger"); return; }
+
+  showToast("Connexion à Firebase...","i-spinner","loading");
+  const ready=await waitForFirebaseAuth();
+  if(!ready){ showToast(getFirebaseErrorMessage(),"i-warn","danger"); return; }
+
+  try{
+    const snap=await get(ref(db,`groups/${code}`));
+    if(!snap.exists()){ showToast("Ce groupe n'existe pas.","i-warn","danger"); return; }
+    const data=snap.val()||{};
+    const groupName=data.name||"Groupe AnonyBoX";
+    await set(ref(db,`groups/${code}/members/${currentUser.uid}`),true);
+    saveGroup(code,groupName);
+    showToast("Groupe rejoint !");
+    await openGroup(code,groupName);
+  }catch(err){
+    console.error("Join :",err);
+    showToast(firebaseReadableError(err),"i-warn","danger");
+  }
+}
+
+async function openGroup(code,name="Groupe AnonyBoX"){
+  cleanupChatListeners();
+  currentGroupCode=String(code).trim().toUpperCase();
+  currentGroupName=name||"Groupe AnonyBoX";
+  document.querySelectorAll("[data-group-code]").forEach(el=>el.textContent=currentGroupCode);
+  document.querySelectorAll("[data-group-name]").forEach(el=>el.textContent=currentGroupName);
+  showScreen("chat-screen");
+  loadMessages(currentGroupCode);
+  loadGroupInfo(currentGroupCode);
+  setupPresence(currentGroupCode);
+  listenTyping(currentGroupCode);
+  listenPresence(currentGroupCode);
+  listenReactions(currentGroupCode);
+  await refreshDeleteButtonVisibility();
+}
+
+/* ─── Presence ─── */
+function setupPresence(code){
+  if(!firebaseAvailable||!firebaseAuthReady||!currentUser||currentUser.isLocal) return;
+  const statusRef=ref(db,`presence/${code}/${currentUser.uid}`);
+  const connRef=ref(db,".info/connected");
+  onValue(connRef,snap=>{
+    if(snap.val()===true){
+      onDisconnect(statusRef).remove();
+      set(statusRef,{uid:currentUser.uid,name:`${getMyName()} ${sessionMask}`,ts:Date.now()});
+    }
+  });
+}
+function listenPresence(code){
+  if(!firebaseAvailable||!firebaseAuthReady||!currentUser||currentUser.isLocal) return;
+  presenceUnsubscribe=onValue(ref(db,`presence/${code}`),snap=>{
+    currentPresence=snap.val()||{};
+    updatePresenceUI();
+  },err=>console.error("presence:",err));
+}
+function updatePresenceUI(){
+  const count=Object.keys(currentPresence).length;
+  const onlineEl=$("info-online-count");
+  if(onlineEl) onlineEl.textContent=count;
+  const statusText=$("chat-status-text");
+  if(statusText && !$("chat-status").classList.contains("is-typing")){
+    if(count>0) statusText.textContent = count===1 ? "1 personne en ligne" : `${count} personnes en ligne`;
+    else statusText.textContent="Groupe privé";
+  }
+}
+
+/* ─── Typing ─── */
+function listenTyping(code){
+  if(!firebaseAvailable||!firebaseAuthReady||!currentUser||currentUser.isLocal) return;
+  typingUnsubscribe=onValue(ref(db,`typing/${code}`),snap=>{
+    const data=snap.val()||{};
+    const now=Date.now();
+    const others=Object.entries(data)
+      .filter(([uid,val])=>uid!==currentUser.uid && val && (now-val.ts)<4000)
+      .map(([,val])=>val.name||"Quelqu'un");
+    updateTypingUI(others);
+  },err=>console.error("typing:",err));
+}
+function updateTypingUI(names){
+  const statusEl=$("chat-status");
+  const statusText=$("chat-status-text");
+  const dot=$("chat-status")?.querySelector(".presence-dot");
+  if(!statusEl||!statusText) return;
+  if(names.length===0){
+    statusEl.classList.remove("is-typing");
+    if(dot) dot.style.display="";
+    updatePresenceUI();
+    return;
+  }
+  statusEl.classList.add("is-typing");
+  if(dot) dot.style.display="none";
+  const label = names.length===1 ? `${names[0]} écrit` : `${names.slice(0,2).join(", ")} écrivent`;
+  statusText.innerHTML = `${escapeHTML(label)} <span class="typing-dots" aria-hidden="true"><span></span><span></span><span></span></span>`;
+}
+function broadcastTyping(){
+  if(!firebaseAvailable||!firebaseAuthReady||!currentUser||currentUser.isLocal||!currentGroupCode) return;
+  const typingRef=ref(db,`typing/${currentGroupCode}/${currentUser.uid}`);
+  set(typingRef,{name:`${getMyName()} ${sessionMask}`,ts:Date.now()});
+  clearTimeout(typingTimer);
+  typingTimer=setTimeout(()=>{ try{ remove(typingRef); }catch{} },2500);
+}
+
+/* ─── Reactions ─── */
+function listenReactions(code){
+  if(!firebaseAvailable||!firebaseAuthReady||!currentUser||currentUser.isLocal) return;
+  reactionsUnsubscribe=onValue(ref(db,`reactions/${code}`),snap=>{
+    currentReactions=snap.val()||{};
+    renderMessages(currentMessages);
+  },err=>console.error("reactions:",err));
+}
+async function toggleReaction(msgId,emoji){
+  if(!firebaseAvailable||!firebaseAuthReady||!currentUser||currentUser.isLocal){
+    showToast("Réactions indisponibles hors-ligne.","i-warn","danger"); return;
+  }
+  const reactRef=ref(db,`reactions/${currentGroupCode}/${msgId}/${emoji}/${currentUser.uid}`);
+  const snap=await get(reactRef);
+  if(snap.exists()) await remove(reactRef);
+  else await set(reactRef,true);
+  haptic(6);
+}
+
+/* ─── Messages ─── */
+function getLocalMessages(code){
+  try{ return JSON.parse(localStorage.getItem(`anonybox_messages_${code}`))||[]; }
+  catch{ return []; }
+}
+function saveLocalMessages(code,messages){
+  localStorage.setItem(`anonybox_messages_${code}`,JSON.stringify(messages));
+}
+
+function renderMessages(messages){
+  const container=$("messages");
+  if(!container) return;
+  currentMessages=messages;
+
+  if(!messages.length){
+    container.innerHTML=`<div class="empty-messages"><div class="empty-icon" aria-hidden="true">${icon("i-ghost")}</div><p>Aucun message pour le moment.</p><small>Commence la conversation.</small></div>`;
+    return;
+  }
+
+  const sorted=[...messages].sort((a,b)=>(a.timestamp||0)-(b.timestamp||0));
+  let html=""; let lastDay=null;
+
+  sorted.forEach(m=>{
+    const day=getDayKey(m.timestamp||Date.now());
+    if(day!==lastDay){
+      html+=`<div class="date-separator">${escapeHTML(formatDateLabel(m.timestamp||Date.now()))}</div>`;
+      lastDay=day;
+    }
+    const mine=currentUser&&m.uid===currentUser.uid;
+
+    let replyHTML="";
+    if(m.replyTo){
+      replyHTML=`<div class="reply-quote"><strong>${escapeHTML(m.replyTo.name||"Anonyme")}</strong><span>${escapeHTML((m.replyTo.text||"").slice(0,80))}</span></div>`;
+    }
+
+    const rx=currentReactions[m.id]||{};
+    let reactionsHTML="";
+    const entries=Object.entries(rx).filter(([,v])=>v&&Object.keys(v).length>0);
+    if(entries.length){
+      reactionsHTML=`<div class="reactions-bar">${entries.map(([emoji,users])=>{
+        const count=Object.keys(users).length;
+        const isMine=currentUser&&users[currentUser.uid];
+        const symbolId=REACTION_ICON[emoji]||"i-r-heart";
+        return `<button type="button" class="reaction-chip ${isMine?"mine":""}" data-react="${escapeHTML(m.id)}|${escapeHTML(emoji)}">${icon(symbolId)} ${count}</button>`;
+      }).join("")}</div>`;
+    }
+
+    html+=`<div class="message-row ${mine?"mine":"other"}" data-msg-id="${escapeHTML(m.id||"")}" data-msg-uid="${escapeHTML(m.uid||"")}">
+      <div class="message-bubble">
+        ${replyHTML}
+        <div class="message-text">${formatMessage(m.text)}</div>
+        <div class="message-time">${formatTime(m.timestamp)}</div>
+      </div>
+      ${reactionsHTML}
+    </div>`;
+  });
+
+  container.innerHTML=html;
+  container.scrollTop=container.scrollHeight;
+
+  container.querySelectorAll(".message-row").forEach(row=>{
+    const bubble=row.querySelector(".message-bubble");
+    if(!bubble) return;
+    attachLongPress(bubble,row.dataset.msgId,row.dataset.msgUid);
+  });
+
+  container.querySelectorAll(".reaction-chip").forEach(chip=>{
+    chip.addEventListener("click",e=>{
+      e.stopPropagation();
+      const [id,emoji]=chip.getAttribute("data-react").split("|");
+      toggleReaction(id,emoji);
+    });
+  });
+}
+
+function attachLongPress(el,msgId,msgUid){
+  let timer=null;
+  function start(){ timer=setTimeout(()=>{ haptic(15); openMessageActions(el,msgId,msgUid); },450); }
+  function cancel(){ clearTimeout(timer); }
+  el.addEventListener("pointerdown",start);
+  el.addEventListener("pointerup",cancel);
+  el.addEventListener("pointerleave",cancel);
+  el.addEventListener("pointercancel",cancel);
+  el.addEventListener("contextmenu",e=>{ e.preventDefault(); openMessageActions(el,msgId,msgUid); });
+}
+
+/* ─── Message actions ─── */
+let msgActionsEl=null;
+function closeMessageActions(){
+  if(msgActionsEl){ msgActionsEl.remove(); msgActionsEl=null; }
+  document.removeEventListener("pointerdown",onDocDownCloseActions,true);
+}
+function onDocDownCloseActions(e){ if(msgActionsEl && !msgActionsEl.contains(e.target)) closeMessageActions(); }
+
+function openMessageActions(anchor,msgId,msgUid){
+  closeMessageActions();
+  const msg=currentMessages.find(m=>m.id===msgId);
+  if(!msg) return;
+  const mine=currentUser&&msgUid===currentUser.uid;
+
+  const el=document.createElement("div");
+  el.className="msg-actions";
+  el.setAttribute("role","menu");
+  el.innerHTML=`
+    <div class="emoji-row">${REACTIONS.map(r=>`<button type="button" data-emoji="${r.key}" aria-label="${r.label}">${icon(r.icon)}</button>`).join("")}</div>
+    <button class="action-item" data-act="reply">${icon("i-reply")}<span>Répondre</span></button>
+    <button class="action-item" data-act="copy">${icon("i-copy")}<span>Copier</span></button>
+    ${mine?`<button class="action-item danger" data-act="delete">${icon("i-trash")}<span>Supprimer</span></button>`:""}
+  `;
+  document.body.appendChild(el);
+  msgActionsEl=el;
+
+  const rect=anchor.getBoundingClientRect();
+  const elRect=el.getBoundingClientRect();
+  let left=Math.min(rect.left,window.innerWidth-elRect.width-12);
+  let top=rect.top-elRect.height-8;
+  if(top<12) top=rect.bottom+8;
+  el.style.left=Math.max(12,left)+"px";
+  el.style.top=top+"px";
+
+  el.querySelectorAll("[data-emoji]").forEach(b=>{
+    b.addEventListener("click",()=>{ toggleReaction(msgId,b.getAttribute("data-emoji")); closeMessageActions(); });
+  });
+  el.querySelectorAll("[data-act]").forEach(b=>{
+    b.addEventListener("click",async()=>{
+      const act=b.getAttribute("data-act");
+      closeMessageActions();
+      if(act==="reply") setReply(msg);
+      else if(act==="copy"){ try{ await navigator.clipboard.writeText(msg.text||""); showToast("Message copié."); }catch{ showToast("Impossible de copier.","i-warn","danger"); } }
+      else if(act==="delete") await deleteOwnMessage(msg);
+    });
+  });
+  setTimeout(()=>document.addEventListener("pointerdown",onDocDownCloseActions,true),0);
+}
+
+async function deleteOwnMessage(msg){
+  if(!msg||!msg.id) return;
+  const ok=await askConfirm({title:"Supprimer",message:"Supprimer ce message ?",iconId:"i-trash",tone:"danger",okText:"Supprimer"});
+  if(!ok) return;
+  try{
+    if(firebaseAvailable&&firebaseAuthReady&&currentUser&&!currentUser.isLocal){
+      await remove(ref(db,`messages/${currentGroupCode}/${msg.id}`));
+    }
+    const local=getLocalMessages(currentGroupCode).filter(m=>m.id!==msg.id);
+    saveLocalMessages(currentGroupCode,local);
+    renderMessages(local);
+    haptic(10);
+    showToast("Message supprimé.");
+  }catch(err){ console.error(err); showToast("Suppression impossible.","i-warn","danger"); }
+}
+
+/* ─── Reply ─── */
+function setReply(msg){
+  replyTarget={id:msg.id,text:msg.text||"",name:`${getMyName()} ${sessionMask}`,uid:msg.uid};
+  const preview=$("reply-preview");
+  if(preview){
+    preview.style.display="flex";
+    $("reply-preview-name").textContent=replyTarget.name;
+    $("reply-preview-text").textContent=(replyTarget.text||"").slice(0,120);
+  }
+  $("message-input")?.focus();
+}
+function clearReply(){
+  replyTarget=null;
+  const preview=$("reply-preview");
+  if(preview) preview.style.display="none";
+}
+
+/* ─── Load messages ─── */
+function loadMessages(code){
+  if(!code) return;
+  if(messagesUnsubscribe){ try{messagesUnsubscribe()}catch{} messagesUnsubscribe=null; }
+  renderMessages(getLocalMessages(code));
+  if(!firebaseAvailable||!firebaseAuthReady||!currentUser||currentUser.isLocal) return;
+
+  messagesUnsubscribe=onValue(ref(db,`messages/${code}`),snapshot=>{
+    const data=snapshot.val();
+    if(!data){ renderMessages([]); return; }
+    const messages=Object.entries(data).map(([id,val])=>({id,...val}));
+
+    const prev=currentMessages;
+    const prevIds=new Set(prev.map(m=>m.id));
+    const hasNew=messages.some(m=>!prevIds.has(m.id)&&m.uid!==currentUser.uid);
+    if(hasNew && prev.length>0){ playPing(); haptic([6,30,6]); }
+
+    saveLocalMessages(code,messages);
+    renderMessages(messages);
+  },err=>console.error("messages:",err));
+}
+
+/* ─── Send ─── */
+async function sendMessage(){
+  const input=$("message-input");
+  if(!input) return;
+  const text=input.value.trim();
+  if(!text) return;
+  if(!currentGroupCode){ showToast("Aucun groupe ouvert.","i-warn","danger"); return; }
+
+  const message={
+    text,
+    uid: currentUser?.uid || createLocalUser().uid,
+    timestamp: Date.now()
+  };
+  if(replyTarget){
+    message.replyTo={ id:replyTarget.id, text:(replyTarget.text||"").slice(0,120), name:replyTarget.name };
+  }
+
+  input.value="";
+  clearReply();
+  haptic(8);
+  input.focus(); // ⬅ garde le clavier/curseur actif après envoi
+
+  if(firebaseAvailable&&firebaseAuthReady&&currentUser&&!currentUser.isLocal){
+    try{
+      await push(ref(db,`messages/${currentGroupCode}`),message);
+      try{ remove(ref(db,`typing/${currentGroupCode}/${currentUser.uid}`)); }catch{}
+      return;
+    }catch(err){
+      console.error("Firebase send:",err);
+      showToast("Message non envoyé.","i-warn","danger");
+      input.value=text;
+      input.focus();
+      return;
+    }
+  }
+
+  const messages=getLocalMessages(currentGroupCode);
+  messages.push({id:"local_"+Date.now(),...message});
+  saveLocalMessages(currentGroupCode,messages);
+  renderMessages(messages);
+}
+
+/* ─── Groups listener ─── */
+function loadGroups(){
+  if(!firebaseAvailable||!firebaseAuthReady||!currentUser||currentUser.isLocal) return;
+  if(groupsUnsubscribe){ try{groupsUnsubscribe()}catch{} groupsUnsubscribe=null; }
+  groupsUnsubscribe=onValue(ref(db,"groups"),snap=>{
+    const data=snap.val(); if(!data) return;
+    const myGroups=[];
+    Object.entries(data).forEach(([code,g])=>{
+      if(g&&g.members&&g.members[currentUser.uid]){
+        myGroups.push({code,name:g.name||"Groupe AnonyBoX",joinedAt:g.createdAt||Date.now()});
+      }
+    });
+    const local=getSavedGroups();
+    const merged=[...myGroups];
+    local.forEach(l=>{ if(!merged.some(g=>g.code===l.code)) merged.push(l); });
+    if(merged.length){ saveGroups(merged); renderSavedGroups(); }
+  },err=>console.error("groups:",err));
+}
+
+/* ─── Group info ─── */
+async function loadGroupInfo(code){
+  if(!code) return;
+  const nameEl=$("info-group-name"), codeEl=$("info-group-code");
+  if(nameEl) nameEl.textContent=currentGroupName||"Groupe";
+  if(codeEl) codeEl.textContent=currentGroupCode||"--------";
+  if(!firebaseAvailable||!firebaseAuthReady||!db||!currentUser||currentUser.isLocal) return;
+  try{
+    const snap=await get(ref(db,`groups/${code}`));
+    if(!snap.exists()) return;
+    const g=snap.val();
+    const name=g.name||"Groupe AnonyBoX";
+    currentGroupName=name;
+    document.querySelectorAll("[data-group-name]").forEach(el=>el.textContent=name);
+    const members=g.members?Object.keys(g.members).length:0;
+    document.querySelectorAll("[data-members-count]").forEach(el=>el.textContent=members);
+  }catch(err){ console.error("info:",err); }
+}
+
+/* ─── Leave / Delete ─── */
+async function leaveCurrentGroup(){
+  if(!currentGroupCode) return;
+  const ok=await askConfirm({title:"Quitter le groupe",message:"Veux-tu vraiment quitter ce groupe ?",iconId:"i-exit",tone:"neutral",okText:"Quitter"});
+  if(!ok) return;
+  const code=currentGroupCode;
+
+  if(firebaseAvailable&&firebaseAuthReady&&currentUser&&!currentUser.isLocal){
+    try{
+      await remove(ref(db,`groups/${code}/members/${currentUser.uid}`));
+      await remove(ref(db,`presence/${code}/${currentUser.uid}`));
+      await remove(ref(db,`typing/${code}/${currentUser.uid}`));
+    }catch(err){ console.error(err); showToast(firebaseReadableError(err),"i-warn","danger"); return; }
+  }
+
+  cleanupChatListeners();
+  removeSavedGroup(code);
+  currentGroupCode=null; currentGroupName=null;
+  showToast("Tu as quitté le groupe.");
+  showHome();
+}
+
+async function deleteCurrentGroup(){
+  if(!currentGroupCode) return;
+  const ok=await askConfirm({title:"Supprimer le groupe",message:"Cette action est irréversible. Continuer ?",iconId:"i-trash",tone:"danger",okText:"Supprimer"});
+  if(!ok) return;
+  const code=currentGroupCode;
+
+  if(firebaseAvailable&&firebaseAuthReady&&currentUser&&!currentUser.isLocal){
+    try{
+      const snap=await get(ref(db,`groups/${code}`));
+      if(snap.exists()){
+        const g=snap.val();
+        if(g.owner && g.owner!==currentUser.uid){
+          showToast("Seul le créateur peut supprimer ce groupe.","i-warn","danger"); return;
+        }
+      }
+      await remove(ref(db,`groups/${code}`));
+      await remove(ref(db,`groupCodes/${code}`));
+      await remove(ref(db,`messages/${code}`));
+      await remove(ref(db,`presence/${code}`));
+      await remove(ref(db,`typing/${code}`));
+      await remove(ref(db,`reactions/${code}`));
+    }catch(err){ console.error(err); showToast(firebaseReadableError(err),"i-warn","danger"); return; }
+  }
+
+  cleanupChatListeners();
+  removeSavedGroup(code);
+  localStorage.removeItem(`anonybox_messages_${code}`);
+  currentGroupCode=null; currentGroupName=null;
+  showToast("Groupe supprimé.");
+  showHome();
+}
+
+/* ─── Copy / Share ─── */
+async function copyGroupCode(){
+  if(!currentGroupCode) return;
+  try{ await navigator.clipboard.writeText(currentGroupCode); showToast("Code copié !"); haptic(6); }
+  catch{ showToast("Impossible de copier.","i-warn","danger"); }
+}
+
+async function shareGroupCode(){
+  if(!currentGroupCode) return;
+  const text=`Rejoins-moi sur AnonyBoX\nGroupe : ${currentGroupName||""}\nCode : ${currentGroupCode}`;
+  const url=location.origin+location.pathname;
+  try{
+    if(navigator.share){ await navigator.share({title:"AnonyBoX",text,url}); haptic(8); }
+    else { await navigator.clipboard.writeText(`${text}\n${url}`); showToast("Invitation copiée !"); }
+  }catch(err){ if(err && err.name!=="AbortError") showToast("Partage annulé.","i-warn","danger"); }
+}
+
+/* ─── Profile ─── */
+function loadProfile(){
+  const uidEl=$("profile-uid")||$("profileUid");
+  if(uidEl&&currentUser) uidEl.textContent=currentUser.uid;
+}
+function loadProfileName(){
+  const input=$("profile-name");
+  if(!input) return;
+  input.value=localStorage.getItem("anonybox_username")||"";
+}
+function saveProfile(){
+  const input=$("profile-name");
+  if(!input) return;
+  const name=input.value.trim().substring(0,30);
+  localStorage.setItem("anonybox_username",name);
+  if(currentGroupCode && firebaseAvailable && firebaseAuthReady && currentUser && !currentUser.isLocal){
+    set(ref(db,`presence/${currentGroupCode}/${currentUser.uid}`),{uid:currentUser.uid,name:`${name} ${sessionMask}`,ts:Date.now()});
+  }
+  paintSessionMask();
+  showToast("Pseudo enregistré !");
+}
+
+/* ─── NEW IDENTITY ─── */
+async function newIdentity(){
+  const ok=await askConfirm({
+    title:"Nouvelle identité",
+    message:"Un nouvel identifiant de session sera généré. Ton historique local reste conservé, mais ton masque change.",
+    iconId:"i-refresh",
+    tone:"neutral",
+    okText:"Régénérer"
+  });
+  if(!ok) return;
+
+  sessionMask = generateSessionMask();
+  sessionStorage.setItem(SESSION_KEY, sessionMask);
+  sessionStorage.setItem(SESSION_START_KEY, String(Date.now()));
+  sessionStart = Date.now();
+  localStorage.removeItem("anonybox_local_uid");
+
+  paintSessionMask();
+  updateSessionDuration();
+  haptic(20);
+  showToast("Nouvelle identité : " + sessionMask, "i-shield");
+}
+
+/* ─── BROUILLAGE ─── */
+function toggleBlur(){
+  const on = document.body.classList.toggle("brouille");
+  localStorage.setItem("anonybox_blur", on ? "1" : "0");
+  const label = $("menu-toggle-blur-label");
+  if(label) label.textContent = on ? "Débrouiller les noms" : "Brouiller les noms";
+  haptic(10);
+  showToast(on ? "Noms brouillés" : "Noms visibles", "i-eye-off");
+}
+function initBlur(){
+  if(localStorage.getItem("anonybox_blur") === "1"){
+    document.body.classList.add("brouille");
+    const label = $("menu-toggle-blur-label");
+    if(label) label.textContent = "Débrouiller les noms";
+  }
+}
+
+/* ─── Unread ─── */
+function loadUnreadMessages(){
+  const unread=parseInt(localStorage.getItem("anonybox_unread")||"0",10);
+  updateUnreadBadge(unread);
+}
+function updateUnreadBadge(count){
+  document.querySelectorAll(".unread-badge").forEach(b=>{
+    b.textContent=count>99?"99+":count;
+    b.style.display=count>0?"flex":"none";
+  });
+}
+
+/* ─── Firebase errors ─── */
+function getFirebaseErrorMessage(){
+  if(!firebaseAvailable) return "Firebase n'est pas initialisé.";
+  if(firebaseAuthError) return firebaseReadableError(firebaseAuthError);
+  if(!firebaseAuthReady) return "Connexion Firebase non disponible.";
+  return "Erreur Firebase inconnue.";
+}
+function firebaseReadableError(err){
+  if(!err) return "Erreur inconnue.";
+  console.error("FB error:",err.code,err.message);
+  switch(err.code){
+    case "auth/operation-not-allowed": return "Connexion anonyme désactivée.";
+    case "auth/network-request-failed": return "Connexion impossible.";
+    case "auth/too-many-requests": return "Trop de tentatives.";
+    case "auth/invalid-api-key": return "Clé API invalide.";
+    case "PERMISSION_DENIED":
+    case "permission_denied": return "Firebase refuse l'accès.";
+    default: return "Erreur Firebase : "+(err.code||err.message||"inconnue");
+  }
+}
+
+/* ─── Chat menu / info ─── */
+function toggleChatMenu(force){
+  const menu=$("chat-menu"),btn=$("chat-menu-button");
+  if(!menu) return;
+  const isOpen=menu.style.display!=="none";
+  const open=typeof force==="boolean"?force:!isOpen;
+  menu.style.display=open?"flex":"none";
+  if(btn) btn.setAttribute("aria-expanded",String(open));
+}
+function toggleGroupInfoPanel(force){
+  const panel=$("group-info-panel");
+  if(!panel) return;
+  const isOpen=panel.style.display!=="none";
+  const open=typeof force==="boolean"?force:!isOpen;
+  panel.style.display=open?"flex":"none";
+}
+async function refreshDeleteButtonVisibility(){
+  const btn=$("menu-delete-group");
+  if(!btn||!currentGroupCode) return;
+  btn.style.display="none";
+  if(!firebaseAvailable||!firebaseAuthReady||!currentUser||currentUser.isLocal) return;
+  try{
+    const snap=await get(ref(db,`groups/${currentGroupCode}`));
+    if(!snap.exists()) return;
+    const g=snap.val();
+    if(g.owner===currentUser.uid) btn.style.display="flex";
+  }catch(err){ console.error(err); }
+}
+
+/* ─── Spotlight cursor ─── */
+function initSpotlight(){
+  const el = $("spotlight");
+  if (!el) return;
+
+  const groupsScreen = $("groups-screen");
+  const homeGroups   = $("home-groups-list");
+  const messageBox   = document.querySelector(".message-box");
+  const searchBox    = document.querySelector(".search");
+  const replyPreview = $("reply-preview");
+
+  function enable()  { document.body.classList.add("spotlight-on"); }
+  function disable() { document.body.classList.remove("spotlight-on"); }
+
+  function onMove(e) {
+    el.style.left = e.clientX + "px";
+    el.style.top  = e.clientY + "px";
+  }
+
+  const targets = [groupsScreen, homeGroups, messageBox, searchBox, replyPreview].filter(Boolean);
+  targets.forEach(t => {
+    t.addEventListener("pointerenter", enable);
+    t.addEventListener("pointerleave", disable);
+  });
+
+  document.addEventListener("focusin", e => {
+    if (e.target.matches("input, textarea, [contenteditable]")) enable();
+  });
+  document.addEventListener("focusout", () => {
+    if (!document.querySelector("input:focus, textarea:focus, [contenteditable]:focus"))
+      setTimeout(() => disable(), 200);
+  });
+
+  document.addEventListener("pointermove", onMove, { passive: true });
+}
+
+/* ─── Focus message input helpers ─── */
+function focusMessageInput(){
+  const input = $("message-input");
+  if(!input) return;
+  // Évite de voler le focus si l'utilisateur sélectionne du texte dans les messages
+  const sel = window.getSelection();
+  if(sel && sel.toString().length > 0) return;
+  input.focus({ preventScroll: false });
+}
+
+function bindMessageBoxFocus(){
+  const box = document.querySelector(".message-box");
+  if(!box) return;
+  box.addEventListener("pointerdown", (e) => {
+    // Si on clique sur le bouton d'envoi, on laisse faire
+    if(e.target.closest("button")) return;
+    // Sinon, on force le focus sur l'input (même si on clique sur le padding)
+    setTimeout(() => $("message-input")?.focus(), 0);
+  });
+}
+
+/* ─── Events ─── */
+function bindEvents(){
+  $("send-message-button")?.addEventListener("click",sendMessage);
+
+  const input=$("message-input");
+  if(input){
+    input.addEventListener("keydown",e=>{
+      if(e.key==="Enter"&&!e.shiftKey){ e.preventDefault(); sendMessage(); }
+    });
+    input.addEventListener("input",()=>{
+      if(input.value.trim().length>0) broadcastTyping();
+    });
+  }
+
+  $("reply-preview-close")?.addEventListener("click",clearReply);
+
+  document.querySelectorAll("[data-create-group]").forEach(b=>b.addEventListener("click",createGroup));
+  document.querySelectorAll("[data-join-group]").forEach(b=>b.addEventListener("click",()=>joinGroup()));
+  document.querySelectorAll("[data-home]").forEach(b=>b.addEventListener("click",showHome));
+  document.querySelectorAll("[data-share-code]").forEach(b=>b.addEventListener("click",shareGroupCode));
+
+  $("home-nav")?.addEventListener("click",showHome);
+  $("groups-nav")?.addEventListener("click",()=>{ renderSavedGroups(); showScreen("groups-screen"); });
+  $("profile-nav")?.addEventListener("click",()=>{ loadProfileName(); updateSessionDuration(); showScreen("profile-screen"); });
+  $("profile-button")?.addEventListener("click",()=>{ loadProfileName(); updateSessionDuration(); showScreen("profile-screen"); });
+  $("see-groups-button")?.addEventListener("click",()=>{ renderSavedGroups(); showScreen("groups-screen"); });
+
+  const menuBtn=$("chat-menu-button");
+  if(menuBtn) menuBtn.addEventListener("click",e=>{ e.stopPropagation(); toggleChatMenu(); });
+
+  document.addEventListener("click",e=>{
+    const menu=$("chat-menu");
+    if(!menu||menu.style.display==="none") return;
+    const btn=$("chat-menu-button");
+    if(!menu.contains(e.target)&&e.target!==btn) toggleChatMenu(false);
+  });
+
+  $("menu-group-info")?.addEventListener("click",()=>{ toggleChatMenu(false); toggleGroupInfoPanel(true); });
+  $("menu-toggle-blur")?.addEventListener("click",()=>{ toggleChatMenu(false); toggleBlur(); });
+  $("menu-copy-code")?.addEventListener("click",()=>{ toggleChatMenu(false); copyGroupCode(); });
+  $("menu-share-code")?.addEventListener("click",()=>{ toggleChatMenu(false); shareGroupCode(); });
+  $("menu-leave-group")?.addEventListener("click",()=>{ toggleChatMenu(false); leaveCurrentGroup(); });
+  $("menu-delete-group")?.addEventListener("click",()=>{ toggleChatMenu(false); deleteCurrentGroup(); });
+
+  $("chat-group-button")?.addEventListener("click",()=>toggleGroupInfoPanel(true));
+  $("group-info-close")?.addEventListener("click",()=>toggleGroupInfoPanel(false));
+
+  $("btn-new-identity")?.addEventListener("click", newIdentity);
+  $("btn-toggle-blur")?.addEventListener("click", toggleBlur);
+
+  const search=$("group-search");
+  if(search){
+    search.addEventListener("input",applyGroupsFilter);
+  }
+
+  $("save-profile")?.addEventListener("click",saveProfile);
+
+  document.addEventListener("keydown",e=>{
+    if(e.key==="Escape"){
+      toggleChatMenu(false);
+      toggleGroupInfoPanel(false);
+      closeMessageActions();
+      clearReply();
+    }
+  });
+
+  bindMessageBoxFocus();
+}
+
+/* ─── Boot ─── */
+document.addEventListener("DOMContentLoaded",()=>{
+  initSession();
+  paintSessionMask();
+  initBlur();
+  initSpotlight();
+
+  renderSavedGroups();
+  loadUnreadMessages();
+  bindEvents();
+  loadProfileName();
+  updateSessionDuration();
+  showHome();
+
+  setInterval(updateSessionDuration, 30000);
+});
+
+window.anonybox={
+  createGroup,joinGroup,openGroup,sendMessage,showHome,
+  leaveCurrentGroup,deleteCurrentGroup,copyGroupCode,shareGroupCode,
+  openSavedGroup,showScreen,toggleChatMenu,toggleGroupInfoPanel,
+  refreshDeleteButtonVisibility,toggleReaction,
+  newIdentity, toggleBlur, focusMessageInput, getSessionMask: () => sessionMask
+};
+
+console.log("AnonyBoX — prêt. Session :", sessionStorage.getItem(SESSION_KEY));
+</script>
 </body>
-        </html>
+  </html>
